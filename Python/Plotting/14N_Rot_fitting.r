@@ -1,0 +1,251 @@
+#Spectrl simulation Program of quadrupolar nuclei, CSA, and ACS
+#The central transition of half-integer quadrupolr nucleus of 1
+#It considers Quadrupolar coupling constant and CSA, ACS, and their relative
+#tensor orientations 
+#Theta and phi angles were considered explicitly
+# Exact diagonalization & Frequency domain simulation #########
+
+library(matlib)
+library(magrittr)
+
+#Rotation Matrix
+Rabc <-  function(alfal, betal, gamal){
+  U =  matrix(0,3,3)
+  U[1,1] = cos(alfal)*cos(betal)*cos(gamal) - sin(alfal)*sin(gamal)
+  U[1,2] =  sin(alfal)*cos(betal)*cos(gamal) + cos(alfal)*sin(gamal)
+  U[1,3] =  -sin(betal)*cos(gamal)
+  U[2,1] =  -cos(alfal)*cos(betal)*sin(gamal) - sin(alfal)*cos(gamal)
+  U[2,2] =  -sin(alfal)*cos(betal)*sin(gamal) + cos(alfal)*cos(gamal)
+  U[2,3] =  sin(betal)*sin(gamal)
+  U[3,1] =  cos(alfal)*sin(betal)
+  U[3,2] =  sin(alfal)*sin(betal)
+  U[3,3] =  cos(betal)
+return(U)
+}
+
+Quad <- function(QXG,ct, st, s2t, c2t, cp ,sp ,c2p ,s2p){
+  sq15=sqrt(1.5); sq6=sqrt(6);
+  R20Q=0.5*sq15*(QXG[3,3]*(3*ct*ct-1)+2*QXG[1,3]*s2t*cp+2*QXG[2,3]*s2t*sp+(QXG[1,1]-QXG[2,2])*st*st*c2p+2*QXG[1,2]*st*st*s2p);
+  R2q1=0.75*QXG[3,3]*s2t;
+  R2q2r=QXG[1,3]*c2t*cp; R2q2i=QXG[1,3]*ct*sp;
+  R2q3r=QXG[2,3]*c2t*sp; R2q3i=QXG[2,3]*ct*cp;
+  R2q4r=0.25*(QXG[1,1]-QXG[2,2])*s2t*c2p; R2q4i=0.5*(QXG[1,1]-QXG[2,2])*st*s2p;
+  R2q5r=0.5*QXG[1,2]*s2t*s2p; R2q5i=QXG[1,2]*st*c2p;
+  R2p1Q=R2q1-R2q2r+1i*R2q2i-R2q3r-1i*R2q3i-R2q4r+1i*R2q4i-R2q5r-1i*R2q5i;
+  R2m1Q=-R2q1+R2q2r+1i*R2q2i+R2q3r-1i*R2q3i+R2q4r+1*R2q4i+R2q5r-1i*R2q5i;
+  
+  R4q1=0.75*QXG[3,3]*st*st;
+  R4q2r=0.5*QXG[1,3]*s2t*cp; R4q2i=QXG[1,3]*st*sp;
+  R4q3r=0.5*QXG[2,3]*s2t*sp; R4q3i=QXG[2,3]*st*cp;
+  R4q4r=0.25*(QXG[1,1]-QXG[2,2])*(1+ct*ct)*c2p; R4q4i=0.5*(QXG[1,1]-QXG[2,2])*ct*s2p;
+  R4q5r=0.5*QXG[1,2]*(1+ct*ct)*s2p; R4q5i=QXG[1,2]*ct*c2p;
+  R2p2Q=R4q1-R4q2r+1i*R4q2i-R4q3r-1i*R4q3i+R4q4r-1i*R4q4i+R4q5r+1i*R4q5i;
+  R2m2Q=R4q1-R4q2r-1i*R4q2i-R4q3r+1i*R4q3i+R4q4r+1i*R4q4i+R4q5r-1i*R4q5i;
+return (c(R2m1Q,R2p1Q,R20Q,R2m2Q, R2p2Q)) 
+}
+
+ChemShift <- function(CsaQXG,ct, st, s2t, c2t, cp, sp, c2p, s2p){
+  sq15=sqrt(1.5);
+  R20cs=0.5*sq15*((2*CsaQXG[3,3]-CsaQXG[1,1]-CsaQXG[2,2])*(ct*ct-1/3)+2*CsaQXG[1,3]*s2t*cp+2*CsaQXG[2,3]*s2t*sp+(CsaQXG[1,1]-CsaQXG[2,2])*st*st*c2p+2*CsaQXG[1,2]*st*st*s2p);
+  R2cs0=0.25*(2*CsaQXG[3,3]-CsaQXG[1,1]-CsaQXG[2,2])*s2t;
+  R2cs1r=CsaQXG[1,3]*c2t*cp; R2cs1i=CsaQXG[1,3]*ct*sp;
+  R2cs2r=CsaQXG[2,3]*c2t*sp; R2cs2i=CsaQXG[2,3]*ct*cp;
+  R2cs3r=0.25*(CsaQXG[1,1]-CsaQXG[2,2])*s2t*c2p; R2cs3i=0.5*(CsaQXG[1,1]-CsaQXG[2,2])*st*s2p;
+  R2cs4r=0.5*CsaQXG[1,2]*s2t*s2p; R2cs4i=CsaQXG[1,2]*st*c2p;
+  R2p1cs=R2cs0-R2cs1r+1i*R2cs1i-R2cs2r-1i*R2cs2i-R2cs3r+1i*R2cs3i-R2cs4r-1i*R2cs4i;
+  R2m1cs=-R2cs0+R2cs1r+1i*R2cs1i+R2cs2r-1i*R2cs2i+R2cs3r+1i*R2cs3i+R2cs4r-1i*R2cs4i;
+return(c(R20cs,R2p1cs,R2m1cs)) 
+}
+
+AntiShift <- function(AcsQXG,ct, st, cp, sp){
+  R11=0.5*(AcsQXG[1,2]-AcsQXG[2,1])*st;
+  R12=0.5*(AcsQXG[1,3]-AcsQXG[3,1])*cp; R13=0.5*(AcsQXG[1,3]-AcsQXG[3,1])*ct*sp;
+  R14=0.5*(AcsQXG[2,3]-AcsQXG[3,2])*sp; R15=0.5*(AcsQXG[2,3]-AcsQXG[3,2])*ct*cp;
+  R1p1acs=-1i*R11+R12-1i*R13+R14+1i*R15;
+  R1m1acs=1i*R11+R12+1i*R13+R14-1i*R15;
+return(c(R1p1acs,R1m1acs))    
+}
+
+
+
+Nptx =  100; freq1D = matrix(0,Nptx+1,1); freq2D = matrix(0,Nptx+1,1); freqSUM = matrix(0,Nptx+1,1);
+XX = matrix(0,Nptx+1,1);freqDIFF = matrix(0,Nptx+1,1);
+
+w0 = 43.38 #Larmor fre in MHz #for N14
+wX = w0*10^6 #actual freq in radian
+
+ntheta  = 500
+nphi = 500
+
+dangle  = 2*pi/Nptx
+
+
+#Spin Quantum Number
+Ispin = 1.
+
+#Quadrupolar Coupling Tensor
+CQ = -3.03 #MHz
+Qeta = 0.45 #eta of Q
+
+# Symmetric 2nd-rank chemical shift anisotropy (CSA) tensor
+Siso = 0.
+delta = 110.
+eta = 0.415
+
+# Antisymmetric 1st-rank chemical shift (ACS) tensor
+Sxy = 050; Sxz = 050; Syz = 050;
+
+Siso = Siso*w0
+delta = delta*w0
+
+CQ = CQ*10^6/(2*Ispin*(2*Ispin-1))
+Sxy = Sxy*w0; Sxz = Sxz*w0;Syz = Syz*w0;
+
+#*****Relative Tensor Orientations
+#input parameters
+#       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
+# CSA===========>Quad==================>X-tal=======================>Gon=================>Lab
+a=0*pi/180; b=0*pi/180; c=0*pi/180;
+zeta = 0*pi/180; lamda = 0*pi/180; nu = 0*pi/180;
+alpha = 0*pi/180; beta = 0*pi/180; gama = 0*pi/180;
+
+#tensor parameter at PAS
+
+QPAS = matrix(0,3,3);
+Csa = matrix(0,3,3);
+Acs = matrix(0,3,3);
+
+#Quadrupolar interactions
+QPAS[1,1] = (Qeta  -1.)*CQ/2.;  
+QPAS[2,2] = -(1.+Qeta)*CQ/2.;
+QPAS[3,3] = CQ;
+
+#2nd-rank chemical shift anisotropy (CSA)
+
+Csa[1,1] = (eta -1.)*delta/2.;
+Csa[2,2] = -(1.+eta)*delta/2.;
+Csa[3,3] = delta;
+
+#1st-rank antisymmetric chemical shift (ACS)
+
+Acs[1,2] = Sxy; Acs[1,3] = Sxz;
+Acs[2,1] = Sxy; Acs[2,3] = Syz;
+Acs[3,1] = -Sxz; Acs[3,2] = -Syz;
+
+#Combining CSA and ACS
+CSPAS = Csa+Acs
+
+#Transformation between different frames
+
+U = Rabc(a,b,c) 
+CsaQ = U%*%Csa%*%inv(U); AcsQ = U%*%Acs%*%inv(U); CSQ = U%*%CSPAS%*%inv(U); #check matrix multiplication here
+U = Rabc(zeta, lamda, nu) 
+QX = U%*%QPAS%*%inv(U); CsaQX = U%*%CsaQ%*%inv(U); AcsQX = U%*%AcsQ%*%inv(U); #check matrix multiplication here
+U = Rabc(alpha, beta, gama) 
+QXG = U%*%QX%*%inv(U); CsaQXG = U%*%CsaQX%*%inv(U); AcsQXG = U%*%AcsQX%*%inv(U); #check matrix multiplication here
+
+ang = 0 #starting angle
+
+#freq1D = rep(0,Nptx)
+
+for (j in 1:(Nptx+1)) {
+  theta = -pi/2 #-z rotation
+    phi = -ang
+  
+   # theta = ang #y rotation
+   #  phi = 0.
+  # # 
+   # theta = -ang #-x rotation
+   # phi = pi/2.
+  
+  ct = cos(theta); st = sin(theta); s2t = 2*ct*st; c2t = ct*ct-st*st;
+  cp = cos(phi); sp = sin(phi); s2p = 2*cp*sp; c2p = cp*cp-sp*sp;
+  qu = Quad(QXG,ct, st, s2t, c2t, cp ,sp ,c2p ,s2p)  #assigned the Quad output to qu variable
+  cs = ChemShift(CsaQXG,ct, st, s2t, c2t, cp, sp, c2p, s2p)
+  acs = AntiShift(AcsQXG,ct, st, cp, sp)
+  qcsa2 = -0.5*(qu[1]*cs[2]+qu[2]*cs[3])/wX;
+  qacs2 = 0.5*(qu[1]*acs[1]-qu[2]*acs[2])/wX;
+  freq1D[j] = Siso+sqrt(2/3)*cs[1]+sqrt(1.5)*qu[3]+0.5*(qu[4]*qu[5]-qu[1]*qu[2])/wX+3*(qcsa2+qacs2); # 1 <-> 0
+  freq2D[j] = Siso+sqrt(2/3)*cs[1]-sqrt(1.5)*qu[3]+0.5*(qu[4]*qu[5]-qu[1]*qu[2])/wX-3*(qcsa2+qacs2); # 0 <-> -1
+
+  
+  
+  
+  
+  # qcsa2 = -0.5*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/wX;
+  # qacs2 = 0.5*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)/wX;
+  #  freq1D(j) = Siso+sqrt(2/3)*R20cs+sqrt(1.5)*R20Q+0.5*(R2m2Q*R2p2Q-R2m1Q*R2p1Q)/wX+3*(qcsa2+qacs2); # 1 <-> 0 
+  # freq2D(j) = Siso+sqrt(2/3)*R20cs-sqrt(1.5)*R20Q+0.5*(R2m2Q*R2p2Q-R2m1Q*R2p1Q)/wX-3*(qcsa2+qacs2); # 0 <-> -1  
+  freqSUM[j] = freq1D[j]+freq2D[j];           #1 <-> -1 transition 
+  freqDIFF[j] = freq1D[j]-freq2D[j];           #1 <-> -1 transition 
+  XX[j]=ang*180/pi;
+  ang = ang + dangle
+
+}
+df = data.frame(angle = XX, fre_sum = Re(freqSUM), freq_diff = Re(freqDIFF))
+df_sum = data.frame(angle = XX, Frequency = Re(freqSUM))
+df_diff = data.frame(angle = XX, Frequency = Re(freqDIFF))
+df1= data.frame(angle = XX, Frequency = Re(freq1D))
+df2 = data.frame(angle = XX, Frequency = Re(freq2D))
+
+# write.table(df_sum, file = "sum_frequncy_z_rot.txt", sep = "\t",
+#             row.names = FALSE)
+write.csv(df_sum, file = "sum_frequncy_z_rot.csv", row.names = FALSE)
+write.csv(df_diff, file = "diff_freq_z_rot.csv", row.names = FALSE)
+write.csv(df1, file = "|1>|0>_freq_z_rot.csv", row.names = FALSE )
+write.csv(df2, file = "|0>|-1>_freq_z_rot.csv", row.names = FALSE)
+#colnames(df) <- c("z angle", "Sum Frequency for 1<-> -1 transition")
+
+#Fitting the generated data using custom function
+
+# fitting_plot= function(data, angle, Sum_Frequency){
+# library(minpack.lm)
+# library(ggplot2)
+# library(tidyr)
+# #data <- read.csv("Frequency_Sum.csv", header = TRUE) #reading data
+# # attach(data)
+# # head(data)
+# #plot(data$angle, data$Sum_Frequency, type = 'l')
+
+# CSA1<- function(A, B, C, theta){               #Custom function for first order CSA
+#   (A+B*cos(2*theta*pi/180) + C*sin(2*theta*pi/180))
+# }
+
+
+# model_CSA1<- nls(Sum_Frequency ~ CSA1(A, B, C, angle), data=data, start=list(A=100,B=100, C = 100))
+# summary(model_CSA1)
+# coef(model_CSA1)
+# anglim <- range(data$angle) 
+# ang.grid <- seq(from = anglim[1], to = anglim[2])
+
+# pred.CSA1 <- predict(model_CSA1, newdata = list(t=ang.grid), se = TRUE)
+# ##########************************************######################
+
+#  HQ2 <- function(D, E, F, G, H, theta){         #Custom function for second order Quadrupole
+#      (D + E*cos(2*theta*pi/180) + F*sin(2*theta*pi/180) + G*cos(4*theta*pi/180) + H*sin(4*theta*pi/180))
+#  }
+#  model_HQ2<- nls(Sum_Frequency ~ HQ2(D, E, F, G, H, angle), data=data, start=list(D=1,E=1,F= 1, G = 1, H = 1))
+
+# pred.HQ2<- predict(model_HQ2, newdata = list(t=ang.grid), se = TRUE)
+
+# p<- ggplot() + geom_point(data = data, aes(x = angle, y = Sum_Frequency, color= 'data'))+
+# geom_line(aes(x = angle, y = pred.CSA1, color = 'Fit' ))+labs( title = 'Plot for I order CSA fit', x = 'Angle', y = 'Sum Frequency', color = 'Line') + scale_color_manual(values = c("red", "orange"), labels = c("data", "fit"))
+# p<- p + theme_classic()
+# show(p)
+# print(model_CSA1)
+# print(model_HQ2)
+# #write.csv(df,"Frequency_Sum.csv")
+# #print(df)
+# #plot(XX,Re(freqSUM))
+# # pdf("freq_rot_Z_ACS_off.pdf")
+# # 
+# # par(mfrow=c(1,3))
+# # 
+# # plot(XX,freq1D, type = "l", col = 'blue',  ylab ="", xlab = "")
+# # par(new=TRUE)
+# # plot(XX,freq2D, type = "l", col = 'green', ylab = "Freq1D + Freq2D",xlab = "Z"  )
+# # plot(XX,freqSUM, type = "l", col = 'red',xlab = "Z")
+# # plot(XX,freqDIFF, type = "l", col = 'dark red',xlab = "Z")
+# # 
+# # dev.off()
+# }
