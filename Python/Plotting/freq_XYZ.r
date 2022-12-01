@@ -4,10 +4,18 @@
 #tensor orientations 
 #Theta and phi angles were considered explicitly
 # Exact diagonalization & Frequency domain simulation #########
-
-library(matlib)
-library(magrittr)
-
+  # theta = -pi/2 #-z rotation
+  #   phi = -ang
+  
+  # #  theta = ang #y rotation
+  # #   phi = 0.
+  # # # 
+  #  theta = -ang #-x rotation
+  #  phi = pi/2.
+print("for z rot: th = -pi/2; ph = -ang|")
+print("for y rot:th = ang; ph = 0|")
+print("fir x rot: th = -ang; ph = pi/2")
+data <- function(acs1, acs2, acs3, file){
 #Rotation Matrix
 Rabc <-  function(alfal, betal, gamal){
   U =  matrix(0,3,3)
@@ -93,7 +101,7 @@ delta = 110.
 eta = 0.415
 
 # Antisymmetric 1st-rank chemical shift (ACS) tensor
-Sxy = 0; Sxz = 0; Syz = 0;
+Sxy = acs1; Sxz = acs2; Syz = acs3;
 
 Siso = Siso*w0
 delta = delta*w0
@@ -149,12 +157,12 @@ ang = 0 #starting angle
 #freq1D = rep(0,Nptx)
 
 for (j in 1:(Nptx+1)) {
+
   theta = -pi/2 #-z rotation
-    phi = -ang
+    phi = -ang 
+  # #  theta = ang #y rotation
+  # #   phi = 0.
   
-  #  theta = ang #y rotation
-  #   phi = 0.
-  # # 
   #  theta = -ang #-x rotation
   #  phi = pi/2.
   
@@ -163,15 +171,12 @@ for (j in 1:(Nptx+1)) {
   qu = Quad(QXG,ct, st, s2t, c2t, cp ,sp ,c2p ,s2p)  #assigned the Quad output to qu variable
   cs = ChemShift(CsaQXG,ct, st, s2t, c2t, cp, sp, c2p, s2p)
   acs = AntiShift(AcsQXG,ct, st, cp, sp)
+  print(acs)
   qcsa2 = -0.5*(qu[1]*cs[2]+qu[2]*cs[3])/wX;
   qacs2 = 0.5*(qu[1]*acs[1]-qu[2]*acs[2])/wX;
   freq1D[j] = Siso+sqrt(2/3)*cs[1]+sqrt(1.5)*qu[3]+0.5*(qu[4]*qu[5]-qu[1]*qu[2])/wX+3*(qcsa2+qacs2); # 1 <-> 0
   freq2D[j] = Siso+sqrt(2/3)*cs[1]-sqrt(1.5)*qu[3]+0.5*(qu[4]*qu[5]-qu[1]*qu[2])/wX-3*(qcsa2+qacs2); # 0 <-> -1
 
-  
-  
-  
-  
   # qcsa2 = -0.5*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/wX;
   # qacs2 = 0.5*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)/wX;
   #  freq1D(j) = Siso+sqrt(2/3)*R20cs+sqrt(1.5)*R20Q+0.5*(R2m2Q*R2p2Q-R2m1Q*R2p1Q)/wX+3*(qcsa2+qacs2); # 1 <-> 0 
@@ -190,8 +195,8 @@ df = data.frame(angle = XX, fre_sum = Re(freqSUM), freq_diff = Re(freqDIFF), fre
 
 # write.table(df_sum, file = "sum_frequncy_z_rot.txt", sep = "\t",
 #             row.names = FALSE)
-write.csv(df, file = "noacsfreq_z_rot.csv", row.names=FALSE)
-
+write.csv(df, file, row.names=FALSE)
+}
 # write.csv(df_sum, file = "sum_frequncy_z_rot.csv", row.names = FALSE)
 # write.csv(df_diff, file = "diff_freq_z_rot.csv", row.names = FALSE)
 # write.csv(df1, file = "|1>|0>_freq_z_rot.csv", row.names = FALSE )

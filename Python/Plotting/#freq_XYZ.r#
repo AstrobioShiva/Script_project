@@ -5,16 +5,16 @@
 #Theta and phi angles were considered explicitly
 # Exact diagonalization & Frequency domain simulation #########
 
-library(matlib)
-library(magrittr)
 
+data_freq <- function(acs1, acs2, acs3, file){
 #Rotation Matrix
 Rabc <-  function(alfal, betal, gamal){
   U =  matrix(0,3,3)
   U[1,1] = cos(alfal)*cos(betal)*cos(gamal) - sin(alfal)*sin(gamal)
   U[1,2] =  sin(alfal)*cos(betal)*cos(gamal) + cos(alfal)*sin(gamal)
   U[1,3] =  -sin(betal)*cos(gamal)
-  U[2,1] =  -cos(alfal)*cos(betal)*sin(gamal) - sin(alfal)*cos(gamal)
+  U[2,1] =  -
+  cos(alfal)*cos(betal)*sin(gamal) - sin(alfal)*cos(gamal)
   U[2,2] =  -sin(alfal)*cos(betal)*sin(gamal) + cos(alfal)*cos(gamal)
   U[2,3] =  sin(betal)*sin(gamal)
   U[3,1] =  cos(alfal)*sin(betal)
@@ -93,7 +93,7 @@ delta = 110.
 eta = 0.415
 
 # Antisymmetric 1st-rank chemical shift (ACS) tensor
-Sxy = 0; Sxz = 0; Syz = 0;
+Sxy = acs1; Sxz = acs2; Syz = acs3;
 
 Siso = Siso*w0
 delta = delta*w0
@@ -138,25 +138,25 @@ CSPAS = Csa+Acs
 #Transformation between different frames
 
 U = Rabc(a,b,c) 
-CsaQ = U%*%Csa%*%solve(U); AcsQ = U%*%Acs%*%solve(U); CSQ = U%*%CSPAS%*%solve(U); #check matrix multiplication here
+CsaQ = U%*%Csa%*%inv(U); AcsQ = U%*%Acs%*%inv(U); CSQ = U%*%CSPAS%*%inv(U); #check matrix multiplication here
 U = Rabc(zeta, lamda, nu) 
-QX = U%*%QPAS%*%solve(U); CsaQX = U%*%CsaQ%*%solve(U); AcsQX = U%*%AcsQ%*%solve(U); #check matrix multiplication here
+QX = U%*%QPAS%*%inv(U); CsaQX = U%*%CsaQ%*%inv(U); AcsQX = U%*%AcsQ%*%inv(U); #check matrix multiplication here
 U = Rabc(alpha, beta, gama) 
-QXG = U%*%QX%*%solve(U); CsaQXG = U%*%CsaQX%*%solve(U); AcsQXG = U%*%AcsQX%*%solve(U); #check matrix multiplication here
+QXG = U%*%QX%*%inv(U); CsaQXG = U%*%CsaQX%*%inv(U); AcsQXG = U%*%AcsQX%*%inv(U); #check matrix multiplication here
 
 ang = 0 #starting angle
 
 #freq1D = rep(0,Nptx)
 
 for (j in 1:(Nptx+1)) {
-  theta = -pi/2 #-z rotation
-    phi = -ang
+  # theta = -pi/2 #-z rotation
+  #   phi = -ang
   
   #  theta = ang #y rotation
   #   phi = 0.
   # # 
-  #  theta = -ang #-x rotation
-  #  phi = pi/2.
+   theta = -ang #-x rotation
+   phi = pi/2.
   
   ct = cos(theta); st = sin(theta); s2t = 2*ct*st; c2t = ct*ct-st*st;
   cp = cos(phi); sp = sin(phi); s2p = 2*cp*sp; c2p = cp*cp-sp*sp;
@@ -190,8 +190,8 @@ df = data.frame(angle = XX, fre_sum = Re(freqSUM), freq_diff = Re(freqDIFF), fre
 
 # write.table(df_sum, file = "sum_frequncy_z_rot.txt", sep = "\t",
 #             row.names = FALSE)
-write.csv(df, file = "noacsfreq_z_rot.csv", row.names=FALSE)
-
+write.csv(df, file, row.names=FALSE)
+}
 # write.csv(df_sum, file = "sum_frequncy_z_rot.csv", row.names = FALSE)
 # write.csv(df_diff, file = "diff_freq_z_rot.csv", row.names = FALSE)
 # write.csv(df1, file = "|1>|0>_freq_z_rot.csv", row.names = FALSE )
