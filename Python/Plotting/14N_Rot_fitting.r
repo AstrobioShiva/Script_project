@@ -93,7 +93,7 @@ delta = 110.
 eta = 0.415
 
 # Antisymmetric 1st-rank chemical shift (ACS) tensor
-Sxy = 0; Sxz = 0; Syz = 0;
+Sxy = 100; Sxz = 150; Syz = 200;
 
 Siso = Siso*w0
 delta = delta*w0
@@ -190,8 +190,14 @@ df = data.frame(angle = XX, fre_sum = Re(freqSUM), freq_diff = Re(freqDIFF), fre
 
 # write.table(df_sum, file = "sum_frequncy_z_rot.txt", sep = "\t",
 #             row.names = FALSE)
-write.csv(df, file = "noacsfreq_z_rot.csv", row.names=FALSE)
+write.csv(df, file = "acsfreq_z_rot.csv", row.names=FALSE)
 
+data1 <- read.csv("acsfreq_z_rot.csv", header = TRUE)
+data2 <- read.csv("noacsfreq_z_rot.csv", header = TRUE)
+head(data1)
+par(mfrow=c(2,1))
+plot(data1$angle, data1$fre_sum)
+plot(data2$angle, data2$fre_sum)
 # write.csv(df_sum, file = "sum_frequncy_z_rot.csv", row.names = FALSE)
 # write.csv(df_diff, file = "diff_freq_z_rot.csv", row.names = FALSE)
 # write.csv(df1, file = "|1>|0>_freq_z_rot.csv", row.names = FALSE )
