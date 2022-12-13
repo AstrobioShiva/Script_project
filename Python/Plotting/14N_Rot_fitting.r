@@ -84,7 +84,8 @@ dangle  = 2*pi/Nptx
 Ispin = 1.
 
 #Quadrupolar Coupling Tensor
-CQ = -3.03 #MHz
+# CQ = -3.03 #MHz
+CQ = 0
 Qeta = 0.45 #eta of Q
 
 # Symmetric 2nd-rank chemical shift anisotropy (CSA) tensor
@@ -190,14 +191,11 @@ df = data.frame(angle = XX, fre_sum = Re(freqSUM), freq_diff = Re(freqDIFF), fre
 
 # write.table(df_sum, file = "sum_frequncy_z_rot.txt", sep = "\t",
 #             row.names = FALSE)
-write.csv(df, file = "acsfreq_z_rot.csv", row.names=FALSE)
+write.csv(df, file = "nocqfreq_z_rot.csv", row.names=FALSE)
 
-data1 <- read.csv("acsfreq_z_rot.csv", header = TRUE)
-data2 <- read.csv("noacsfreq_z_rot.csv", header = TRUE)
-head(data1)
-par(mfrow=c(2,1))
-plot(data1$angle, data1$fre_sum)
-plot(data2$angle, data2$fre_sum)
+# data1 <- read.csv("acsfreq_z_rot.csv", header = TRUE)
+# data2 <- read.csv("noacsfreq_z_rot.csv", header = TRUE)
+
 # write.csv(df_sum, file = "sum_frequncy_z_rot.csv", row.names = FALSE)
 # write.csv(df_diff, file = "diff_freq_z_rot.csv", row.names = FALSE)
 # write.csv(df1, file = "|1>|0>_freq_z_rot.csv", row.names = FALSE )
