@@ -32,7 +32,7 @@ Quad <- function(QXG,ct, st, s2t, c2t, cp ,sp ,c2p ,s2p){
   R2q4r=0.25*(QXG[1,1]-QXG[2,2])*s2t*c2p; R2q4i=0.5*(QXG[1,1]-QXG[2,2])*st*s2p;
   R2q5r=0.5*QXG[1,2]*s2t*s2p; R2q5i=QXG[1,2]*st*c2p;
   R2p1Q=R2q1-R2q2r+1i*R2q2i-R2q3r-1i*R2q3i-R2q4r+1i*R2q4i-R2q5r-1i*R2q5i;
-  R2m1Q=-R2q1+R2q2r+1i*R2q2i+R2q3r-1i*R2q3i+R2q4r+1*R2q4i+R2q5r-1i*R2q5i;
+  R2m1Q=-R2q1+R2q2r+1i*R2q2i+R2q3r-1i*R2q3i+R2q4r+1i*R2q4i+R2q5r-1i*R2q5i;
   
   R4q1=0.75*QXG[3,3]*st*st;
   R4q2r=0.5*QXG[1,3]*s2t*cp; R4q2i=QXG[1,3]*st*sp;
@@ -84,8 +84,8 @@ dangle  = 2*pi/Nptx
 Ispin = 1.
 
 #Quadrupolar Coupling Tensor
-# CQ = -3.03 #MHz
-CQ = 0
+CQ = -3.03 #MHz
+# CQ = 0
 Qeta = 0.45 #eta of Q
 
 # Symmetric 2nd-rank chemical shift anisotropy (CSA) tensor
@@ -173,10 +173,7 @@ for (j in 1:(Nptx+1)) {
   
   
   
-  # qcsa2 = -0.5*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/wX;
-  # qacs2 = 0.5*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)/wX;
-  #  freq1D(j) = Siso+sqrt(2/3)*R20cs+sqrt(1.5)*R20Q+0.5*(R2m2Q*R2p2Q-R2m1Q*R2p1Q)/wX+3*(qcsa2+qacs2); # 1 <-> 0 
-  # freq2D(j) = Siso+sqrt(2/3)*R20cs-sqrt(1.5)*R20Q+0.5*(R2m2Q*R2p2Q-R2m1Q*R2p1Q)/wX-3*(qcsa2+qacs2); # 0 <-> -1  
+ 
   freqSUM[j] = freq1D[j]+freq2D[j];           #1 <-> -1 transition 
   freqDIFF[j] = freq1D[j]-freq2D[j];           #1 <-> -1 transition 
   XX[j]=ang*180/pi;
@@ -184,23 +181,10 @@ for (j in 1:(Nptx+1)) {
 
 }
 df = data.frame(angle = XX, fre_sum = Re(freqSUM), freq_diff = Re(freqDIFF), freq_1D = Re(freq1D), freq_2D = Re(freq2D))
-# df_sum = data.frame(angle = XX, Frequency = Re(freqSUM))
-# df_diff = data.frame(angle = XX, Frequency = Re(freqDIFF))
-# df1= data.frame(angle = XX, Frequency = Re(freq1D))
-# df2 = data.frame(angle = XX, Frequency = Re(freq2D))
 
-# write.table(df_sum, file = "sum_frequncy_z_rot.txt", sep = "\t",
-#             row.names = FALSE)
-write.csv(df, file = "nocqfreq_z_rot.csv", row.names=FALSE)
 
-# data1 <- read.csv("acsfreq_z_rot.csv", header = TRUE)
-# data2 <- read.csv("noacsfreq_z_rot.csv", header = TRUE)
+write.csv(df, file = "freq_z_rot.csv", row.names=FALSE)
 
-# write.csv(df_sum, file = "sum_frequncy_z_rot.csv", row.names = FALSE)
-# write.csv(df_diff, file = "diff_freq_z_rot.csv", row.names = FALSE)
-# write.csv(df1, file = "|1>|0>_freq_z_rot.csv", row.names = FALSE )
-# write.csv(df2, file = "|0>|-1>_freq_z_rot.csv", row.names = FALSE)
-#colnames(df) <- c("z angle", "Sum Frequency for 1<-> -1 transition")
 
 #Fitting the generated data using custom function
 
