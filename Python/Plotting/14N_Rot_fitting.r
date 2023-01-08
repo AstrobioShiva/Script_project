@@ -150,14 +150,14 @@ ang = 0 #starting angle
 #freq1D = rep(0,Nptx)
 
 for (j in 1:(Nptx+1)) {
-  theta = -pi/2 #-z rotation
-    phi = -ang
+  # theta = -pi/2 #-z rotation
+  #   phi = -ang
   
   #  theta = ang #y rotation
   #   phi = 0.
   # # 
-  #  theta = -ang #-x rotation
-  #  phi = pi/2.
+   theta = -ang #-x rotation
+   phi = pi/2.
   
   ct = cos(theta); st = sin(theta); s2t = 2*ct*st; c2t = ct*ct-st*st;
   cp = cos(phi); sp = sin(phi); s2p = 2*cp*sp; c2p = cp*cp-sp*sp;
@@ -183,7 +183,7 @@ for (j in 1:(Nptx+1)) {
 df = data.frame(angle = XX, fre_sum = Re(freqSUM), freq_diff = Re(freqDIFF), freq_1D = Re(freq1D), freq_2D = Re(freq2D))
 
 
-write.csv(df, file = "freq_z_rot.csv", row.names=FALSE)
+write.csv(df, file = "freq_x_rot.csv", row.names=FALSE)
 
 
 #Fitting the generated data using custom function
