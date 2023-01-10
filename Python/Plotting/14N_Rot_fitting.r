@@ -89,9 +89,9 @@ CQ = -3.03 #MHz
 Qeta = 0.45 #eta of Q
 
 # Symmetric 2nd-rank chemical shift anisotropy (CSA) tensor
-Siso = 0.
-delta = 110.
-eta = 0.415
+Siso = 0.     #isotropic chemical shift + offset(ppm)
+delta = 110.  #chemical shift anisotropy (CSA) (ppm)
+eta = 0.415   #eta of CSA
 
 # Antisymmetric 1st-rank chemical shift (ACS) tensor
 Sxy = 100; Sxz = 150; Syz = 200;
