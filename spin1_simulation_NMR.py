@@ -131,7 +131,7 @@ def data_file():
 
         #********************change made from original code according to theory in next line**************************
             HCSA1 = (1/3*Siso + R20cs)
-            HQCSA = -0.5/(2*Ispin*(2*Ispin - 1))*(R2m1Q*R2p1cs + R2p1Q*R2m1cs)/wX;
+            HQCSA = -0.5/(2*Ispin*(2*Ispin - 1))*(R2m1Q*R2p1cs + R2p1Q*R2m1cs)/wX; #XQ = 1/(2*Ispin*(2*Ispin - 1))
             HQACS = 0.5/(2*Ispin*(2*Ispin - 1))*(R2m1Q*R1p1acs - R2p1Q*R1m1acs)/wX;
             HQ1 = 0.25/(2*Ispin*(2*Ispin - 1))*R20Q
             HQ2 = 0.5/(2*Ispin*(2*Ispin - 1))**2*(R2m2Q*R2p2Q - R2m1Q*R2p1Q)/wX
