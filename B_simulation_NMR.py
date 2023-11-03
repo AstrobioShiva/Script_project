@@ -29,7 +29,7 @@ delta_ppm = 257.0  #chemical shift anisotropy (CSA) (ppm)
 eta = 0.254   #eta of CSA
 
 
-Sxy = 500; Sxz = 500; Syz = 500
+Sxy = -500; Sxz = 500; Syz = -500
 
 #************************************************************************************************
 
@@ -57,7 +57,7 @@ delta = delta_ppm*w0
 
 a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-alpha, beta, gama = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+alpha, beta, gama = 50*np.pi/180, 270*np.pi/180, 120*np.pi/180
 
 # tensor parameter at PAS
 QPAS = np.zeros((3, 3))
