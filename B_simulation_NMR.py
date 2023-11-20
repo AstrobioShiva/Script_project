@@ -11,7 +11,7 @@ wX = w0*10**6 #actual freq in Hz
 ntheta  = 500
 nphi = 500
 
-dangle  = 2*np.pi/Nptx
+dangle  = np.pi/Nptx
 
 #Spin Quantum Number
 Ispin = 3/2
@@ -57,7 +57,7 @@ delta = delta_ppm*w0
 
 a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-alpha, beta, gama = 50*np.pi/180, 270*np.pi/180, 120*np.pi/180
+alpha, beta, gama = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
 # tensor parameter at PAS
 QPAS = np.zeros((3, 3))
