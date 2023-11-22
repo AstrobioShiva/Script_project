@@ -107,7 +107,7 @@ CsaQXG = np.matmul(np.matmul(U, CsaQX), np.linalg.inv(U));
 AcsQXG = np.matmul(np.matmul(U, AcsQX), np.linalg.inv(U)); 
 CSQXG = np.matmul(np.matmul(U, CSQX), np.linalg.inv(U));
 
-def data_file():
+def N_data_file():
     
     text = ['z rotation', 'y rotation', 'x rotation']
     df = [0]*3
@@ -144,7 +144,7 @@ def data_file():
             freqSUM[j] = freq1D[j]+freq2D[j]           #1 <-> -1 transition 
             freqDIFF[j] = freq1D[j]-freq2D[j]          #1 <-> -1 transition 
             
-
+            #the coeffient are taken from coefficients in freq equation
             qcsa[j] = 3*np.real(HQCSA)
             qacs[j] = 3*np.real(HQACS)
             qacs_anti[j] = 3*np.real(-HQACS)

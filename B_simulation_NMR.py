@@ -149,7 +149,7 @@ def B_data_file():
             freqSUM[j] = freq1D[j]+freq2D[j] + freq3D[j]          #3/2 <-> 1/2 + 1/2 <-> -1/2 + -1/2   <-> -3/2  transition 
             freqDIFF[j] = freq1D[j]-freq3D[j]                     #3/2 <-> 1/2 - -1/2   <-> -3/2  transition 
             
-
+            #the coeffient are taken from coefficients in freq equation
             qcsa[j] = 6*np.real(HQCSA)
             qacs[j] = 6*np.real(HQACS)
             qacs_anti[j] = 6*np.real(-HQACS)
