@@ -1,0 +1,6 @@
+
+for numb in range (1,10):
+    filename = "data" + str(numb) + ".csv"
+    f = open(filename, 'w')
+    f.write("Test!\n")
+    f.close()
