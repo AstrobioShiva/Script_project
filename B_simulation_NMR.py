@@ -17,19 +17,19 @@ dangle  = np.pi/Nptx
 Ispin = 3/2
 
 #Quadrupolar Coupling Tensor
-#coupling values for NAV (taken from paper https://pubmed.ncbi.nlm.nih.gov/22027340/)
+#coupling values for --8HQ(ipc2)B (taken from magres files)
 
-CQ_M = -5.7 #CQ in MHz
+CQ_M = 2.0990 #CQ in MHz
 # CQ = 0
-Qeta = 0.84 #eta of Q
+Qeta = 0.9979 #eta of Q
 
 # Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
 # Siso_ppm = 0.     #isotropic chemical shift + offset(ppm)
-delta_ppm = 257.0  #chemical shift anisotropy (CSA) (ppm)
-eta = 0.254   #eta of CSA
+delta_ppm = -8.527934442343977  #chemical shift anisotropy (CSA) (ppm)
+eta = -0.4711576055124597   #eta of CSA
 
 
-Sxy = -500; Sxz = 500; Syz = -500
+Sxy = 2.297303045; Sxz = 2.69169521; Syz = 2.408619325
 
 #************************************************************************************************
 
