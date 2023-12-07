@@ -1,0 +1,29 @@
+
+<from .bash_profile>
+#
+# for Gaussian
+#
+export g16root="/"
+export GAUSS_SCRDIR="/media/workspace/gauss_scrdir"
+. $g16root/g16/bsd/g16.profile
+#
+# for CASTEP
+#
+export CASTEP_DIR="/castep/obj"
+
+<from .bashrc>
+#
+#Some aliases for runing computational chemistry packages
+#
+# for Gaussian
+#
+alias gv="/gv/gview.sh -mesagl &" #Gaussview
+alias scj="/gv/scjobmangui.exe &" #scjobmangui -- Gaussian job manager
+#
+# for CASTEP
+#
+alias castep.serial="/castep/obj/linux_x86_64_gfortran10--serial/castep.serial"       # single processor — term used in CASTEP documentation
+alias castep_serial=castep.serial.       # Miller likes underscores more than periods but often forgets
+alias castep.mpi="/castep/obj/linux_x86_64_gfortran10--mpi/castep.mpi"        # parallel — term used in CASTEP documentation
+alias castep_mpi=castep.mpi        # Miller likes underscores more than periods but often forgets
+
