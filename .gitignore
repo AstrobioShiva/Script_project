@@ -1,0 +1,3 @@
+#Ignore cache files
+.pyc
+/home/shiva/WMU/PhD/Scripts/phd_project/Python/NMR/NMR_analysis/__pycache__/
