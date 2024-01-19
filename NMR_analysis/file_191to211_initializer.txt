@@ -1,0 +1,25 @@
+#****************provide initial values*****************************************
+initializer_list = [
+    {'gamma': 1, 'center_1': -19, 'split_1': 5, 'center_2': -16, 'split_2' : 5, 'A': 2, 'offset': 0.}, #191
+    {'gamma': 1, 'center_1': -15, 'split_1': 1, 'center_2': -20, 'split_2' : 1, 'A': 2, 'offset': 0.}, #192
+    {'gamma': 1, 'center_1': -14, 'split_1': 1, 'center_2': -14, 'split_2' : 1, 'A': 1, 'offset': 0.}, #193
+    {'gamma': 1, 'center_1': -14, 'split_1': 1, 'center_2': -9, 'split_2' : 1, 'A': 2, 'offset': 0.}, #194
+    {'gamma': 1, 'center_1': -12, 'split_1': 1, 'center_2': -9, 'split_2' : 1, 'A': 2, 'offset': 0.}, #195                                                                   
+    {'gamma': 1, 'center_1': -12, 'split_1': 1, 'center_2': -9, 'split_2': 1, 'A': 1, 'offset': 0.}, #196
+    {'gamma': 1, 'center_1': -16, 'split_1': 1, 'center_2': -14.5, 'split_2' : 3, 'A': 1, 'offset': 0.}, # 197
+    {'gamma': 1, 'center_1': -22, 'split_1': 2, 'center_2': -21.5, 'split_2' : 2, 'A': 1, 'offset': 0.}, #198
+    {'gamma': 1, 'center_1': -28.0, 'split_1': 1, 'center_2': -28.0, 'split_2' : 1, 'A': 1, 'offset': 0.}, #199
+    {'gamma': 1, 'center_1': -31, 'split_1': 2, 'center_2': -32, 'split_2': 2, 'A': 1, 'offset': 0.}, #200
+    {'gamma': 1, 'center_1': -31, 'split_1': 2, 'center_2': -31, 'split_2' : 2, 'A': 1, 'offset': 0.}, #201
+    {'gamma': 1, 'center_1': -24, 'split_1': 2, 'center_2': -26.5, 'split_2' : 2, 'A': 1, 'offset': 0.}, #202
+    {'gamma': 1, 'center_1': -18, 'split_1': 1, 'center_2': -20, 'split_2' : 1, 'A': 1, 'offset': 0.}, #203
+    {'gamma': 1, 'center_1': -12, 'split_1': 1, 'center_2': -17, 'split_2' : 1, 'A': 1, 'offset': 0.}, #204
+    {'gamma': 1, 'center_1': -9, 'split_1': 1, 'center_2': -15, 'split_2' : 1, 'A': 1, 'offset': 0.}, #205
+    {'gamma': 1, 'center_1': -11, 'split_1': 1, 'center_2': -15, 'split_2' : 1, 'A': 1, 'offset': 0.}, #206
+    {'gamma': 1, 'center_1': -14, 'split_1': 1, 'center_2': -17, 'split_2' : 1, 'A': 1, 'offset': 0.}, #207
+    {'gamma': 1, 'center_1': -16, 'split_1': 2, 'center_2': -17, 'split_2' : 2, 'A': 1, 'offset': 0.}, #208
+    {'gamma': 1, 'center_1': -18, 'split_1': 2, 'center_2': -19, 'split_2' : 2, 'A': 1, 'offset': 0.}, #209
+    {'gamma': 1, 'center_1': -16, 'split_1': 2, 'center_2': -19, 'split_2' : 2, 'A': 1, 'offset': 0.}, #210
+    {'gamma': 1, 'center_1': -13, 'split_1': 2, 'center_2': -16, 'split_2' : 2, 'A': 1, 'offset': 0.}, #211
+
+    ]
