@@ -58,7 +58,7 @@ for k in (range(len(Sxy_set))):
 
     a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
     zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    alpha, beta, gama = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    alpha, beta, gama = 30*np.pi/180, 60*np.pi/180, 40*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
@@ -160,4 +160,4 @@ for k in (range(len(Sxy_set))):
 
         df[i]= pd.DataFrame(data, columns=['angle', 'freq_sum', 'freq_diff', 'freq_1D', 'freq_2D', 'freq_3D','acs', 'csa', 'acs_anti'])
 
-        df[i].to_csv(f'{file_path}{text[i]}_set{k+1}.csv', index=True)
+        df[i].to_csv(f'{file_path}{text[i]}_set{k+1}_B11.csv', index=True)
