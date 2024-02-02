@@ -58,7 +58,7 @@ for k in (range(len(Sxy_set))):
 
     a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
     zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    alpha, beta, gama = 30*np.pi/180, 60*np.pi/180, 40*np.pi/180
+    alpha, beta, gama = 90*np.pi/180, 109.836*np.pi/180, 90*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
