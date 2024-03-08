@@ -59,14 +59,10 @@ def ChemShift(CsaQXG, ct, st, s2t, c2t, cp, sp, c2p, s2p):
     
     return [R2m1cs, R20cs, R2p1cs]
 
+#**********************************Changes made to ACS due to modified equations***************************************
 def AntiShift(AcsQXG, ct, st, cp, sp):
-    R11 = 0.5*(AcsQXG[0,1]-AcsQXG[1,0])*st
-    R12 = 0.5*(AcsQXG[0,2]-AcsQXG[2,0])*cp
-    R13 = 0.5*(AcsQXG[0,2]-AcsQXG[2,0])*ct*sp
-    R14 = 0.5*(AcsQXG[1,2]-AcsQXG[2,1])*sp
-    R15 = 0.5*(AcsQXG[1,2]-AcsQXG[2,1])*ct*cp
-    R1p1acs = -1j*R11 + R12 - 1j*R13 + R14 + 1j*R15
-    R1m1acs = 1j*R11 + R12 + 1j*R13 + R14 - 1j*R15
+    R1p1acs = -1j*AcsQXG[0,1]*st + AcsQXG[0,2]*cp - 1j*AcsQXG[0,2]*ct*sp + AcsQXG[1,2]*sp + 1j*AcsQXG[1,2]*ct*cp
+    R1m1acs = 1j*AcsQXG[0,1]*st + AcsQXG[0,2]*cp + 1j*AcsQXG[0,2]*ct*sp + AcsQXG[1,2]*sp - 1j*AcsQXG[1,2]*ct*cp
     
     return[R1m1acs, R1p1acs]
 
