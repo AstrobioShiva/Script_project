@@ -1,23 +1,23 @@
 import numpy as np
 
-def Rabc(alfal, betal, gamal): #Euler Rotation Matrix
+def Rabc(alfa1, beta1, gama1): #Euler Rotation Matrix
     U = np.zeros((3, 3))
-    U[0, 0] = np.cos(alfal)*np.cos(betal)*np.cos(gamal) - np.sin(alfal)*np.sin(gamal)
-    U[0, 1] = np.sin(alfal)*np.cos(betal)*np.cos(gamal) + np.cos(alfal)*np.sin(gamal)
-    U[0, 2] = -np.sin(betal)*np.cos(gamal)
-    U[1, 0] = -np.cos(alfal)*np.cos(betal)*np.sin(gamal) - np.sin(alfal)*np.cos(gamal)
-    U[1, 1] = -np.sin(alfal)*np.cos(betal)*np.sin(gamal) + np.cos(alfal)*np.cos(gamal)
-    U[1, 2] = np.sin(betal)*np.sin(gamal)
-    U[2, 0] = np.cos(alfal)*np.sin(betal)
-    U[2, 1] = np.sin(alfal)*np.sin(betal)
-    U[2, 2] = np.cos(betal)
+    U[0, 0] = np.cos(alfa1)*np.cos(beta1)*np.cos(gama1) - np.sin(alfa1)*np.sin(gama1)
+    U[0, 1] = np.sin(alfa1)*np.cos(beta1)*np.cos(gama1) + np.cos(alfa1)*np.sin(gama1)
+    U[0, 2] = -np.sin(beta1)*np.cos(gama1)
+    U[1, 0] = -np.cos(alfa1)*np.cos(beta1)*np.sin(gama1) - np.sin(alfa1)*np.cos(gama1)
+    U[1, 1] = -np.sin(alfa1)*np.cos(beta1)*np.sin(gama1) + np.cos(alfa1)*np.cos(gama1)
+    U[1, 2] = np.sin(beta1)*np.sin(gama1)
+    U[2, 0] = np.cos(alfa1)*np.sin(beta1)
+    U[2, 1] = np.sin(alfa1)*np.sin(beta1)
+    U[2, 2] = np.cos(beta1)
     return U
 
 def Quad(QXG, ct, st, s2t, c2t, cp, sp, c2p, s2p): #Quadrupolar Interaction Function
     sq15 = np.sqrt(1.5)
     sq6 = np.sqrt(6)
     #**********************change made from original code according to theory in next line***************************
-    R20Q = (QXG[2,2]*(3*ct*ct-1)+2*QXG[0,2]*s2t*cp+2*QXG[1,2]*s2t*sp+(QXG[0,0]-QXG[1,1])*st*st*c2p+2*QXG[0,1]*st*st*s2p)
+    R20Q = 0.25*(QXG[2,2]*(3*ct*ct-1)+2*QXG[0,2]*s2t*cp+2*QXG[1,2]*s2t*sp+(QXG[0,0]-QXG[1,1])*st*st*c2p+2*QXG[0,1]*st*st*s2p) #factor of 1/4 multiplied
     R2q1 = 0.75*QXG[2,2]*s2t
     R2q2r = QXG[0,2]*c2t*cp
     R2q2i = QXG[0,2]*ct*sp
@@ -28,13 +28,17 @@ def Quad(QXG, ct, st, s2t, c2t, cp, sp, c2p, s2p): #Quadrupolar Interaction Func
     R2q5r = 0.5*QXG[0,1]*s2t*s2p
     R2q5i = QXG[0,1]*st*c2p
     R2p1Q = R2q1 - R2q2r + 1j*R2q2i - R2q3r - 1j*R2q3i - R2q4r + 1j*R2q4i - R2q5r - 1j*R2q5i
-    R2m1Q=-R2q1+R2q2r+1j*R2q2i+R2q3r-1j*R2q3i+R2q4r+1j*R2q4i+R2q5r-1j*R2q5i;
+    R2m1Q = -R2q1 + R2q2r + 1j*R2q2i + R2q3r - 1j*R2q3i + R2q4r + 1j*R2q4i + R2q5r - 1j*R2q5i;
   
     R4q1=0.75*QXG[2,2]*st*st;
-    R4q2r=0.5*QXG[0,2]*s2t*cp; R4q2i=QXG[0,2]*st*sp;
-    R4q3r=0.5*QXG[1,2]*s2t*sp; R4q3i=QXG[1,2]*st*cp;
-    R4q4r=0.25*(QXG[0,0]-QXG[1,1])*(1+ct*ct)*c2p; R4q4i=0.5*(QXG[0,0]-QXG[1,1])*ct*s2p;
-    R4q5r=0.5*QXG[0,1]*(1+ct*ct)*s2p; R4q5i=QXG[0,1]*ct*c2p;
+    R4q2r=0.5*QXG[0,2]*s2t*cp; 
+    R4q2i=QXG[0,2]*st*sp;
+    R4q3r=0.5*QXG[1,2]*s2t*sp; 
+    R4q3i=QXG[1,2]*st*cp;
+    R4q4r=0.25*(QXG[0,0]-QXG[1,1])*(1+ct*ct)*c2p; 
+    R4q4i=0.5*(QXG[0,0]-QXG[1,1])*ct*s2p;
+    R4q5r=0.5*QXG[0,1]*(1+ct*ct)*s2p; 
+    R4q5i=QXG[0,1]*ct*c2p;
     R2p2Q=R4q1-R4q2r+1j*R4q2i-R4q3r-1j*R4q3i+R4q4r-1j*R4q4i+R4q5r+1j*R4q5i;
     R2m2Q=R4q1-R4q2r-1j*R4q2i-R4q3r+1j*R4q3i+R4q4r+1j*R4q4i+R4q5r-1j*R4q5i;
     
@@ -45,6 +49,7 @@ def ChemShift(CsaQXG, ct, st, s2t, c2t, cp, sp, c2p, s2p):
     sq15 = np.sqrt(1.5)
     #***************************change made from original code according to theory in next line********************************
     R20cs = 0.5 *(1/3*(2 * CsaQXG[2, 2] - CsaQXG[0, 0] - CsaQXG[1, 1]) * (3*ct ** 2 - 1) +2 * CsaQXG[0, 2] * s2t * cp + 2 * CsaQXG[1, 2] * s2t * sp +(CsaQXG[0, 0] - CsaQXG[1, 1]) * st ** 2 * c2p + 2 * CsaQXG[0, 1] * st ** 2 * s2p)
+    
     R2cs0 = 0.25 * (2 * CsaQXG[2, 2] - CsaQXG[0, 0] - CsaQXG[1, 1]) * s2t
     R2cs1r = CsaQXG[0, 2] * c2t * cp
     R2cs1i = CsaQXG[0, 2] * ct * sp
