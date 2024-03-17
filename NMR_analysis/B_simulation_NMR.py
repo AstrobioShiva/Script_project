@@ -28,7 +28,7 @@ delta_ppm = -8.527934442343977  #chemical shift anisotropy (CSA) (ppm)
 eta = -0.4711576055124597   #eta of CSA
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
-Sxy_set = [-2.297303045, 10]; Sxz_set = [2.69169521, 20]; Syz_set = [-2.408619325, 30] #ACS values for different sites
+Sxy_set = [500]; Sxz_set = [500]; Syz_set = [500]                #Use ACS values for different sites
 
 for k in (range(len(Sxy_set))):
     Sxy = Sxy_set[k]; Sxz = Sxz_set[k]; Syz = Syz_set[k]
@@ -56,9 +56,9 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Lab
 
-    a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    a, b, c =0*np.pi/180, 0*np.pi/180, 0*np.pi/180
     zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    alpha, beta, gama = 90*np.pi/180, 109.836*np.pi/180, 90*np.pi/180
+    alpha, beta, gama = 00*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
@@ -128,14 +128,14 @@ for k in (range(len(Sxy_set))):
             R2m1cs, R20cs, R2p1cs = ChemShift(CsaQXG,ct, st, s2t, c2t, cp, sp, c2p, s2p)
             R1m1acs, R1p1acs = AntiShift(AcsQXG,ct, st, cp, sp);
             #********************change made from original code according to theor415y in next line**************************
-            HCSA1 = (Siso + R20cs)
+            HCSA1 = (Siso + R20cs)                                      #Siso = 1/3(Gzz_csa + Gyy_csa + Gxx_csa)
             HQCSA = -0.5/(2*Ispin*(2*Ispin-1))*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)*(3*Ispin**2 - Ispin*(Ispin + 1))/wX; #change made based on equations in doc
             HQACS = 0.5/(2*Ispin*(2*Ispin-1))*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)*(3*Ispin**2 - Ispin*(Ispin + 1))/wX; #change made based on equations in doc
 
             # HQCSA = -0.5/(2*Ispin*(2*Ispin-1))*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/wX; 
             # HQACS = 0.5/(2*Ispin*(2*Ispin-1))*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)/wX; 
             
-            HQ1 = 0.25/(2*Ispin*(2*Ispin-1))*R20Q
+            HQ1 = 1/(2*Ispin*(2*Ispin-1))*R20Q
             HQ2a= 0.5/(2*Ispin*(2*Ispin-1))**2*(R2m2Q*R2p2Q)/wX
             HQ2b = 0.5/(2*Ispin*(2*Ispin-1))**2*(R2m1Q*R2p1Q)/wX
 

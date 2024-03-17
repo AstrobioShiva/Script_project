@@ -56,8 +56,8 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Lab
 
-    a, b, c = 30*np.pi/180, 140*np.pi/180, 50*np.pi/180
-    zeta, lamda, nu = 110*np.pi/180, 30*np.pi/180, 210*np.pi/180
+    a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
     alpha, beta, gama = 00*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
     # tensor parameter at PAS
@@ -134,7 +134,7 @@ for k in (range(len(Sxy_set))):
             HQACS = (0.5/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
 
             
-            HQ1 = R20Q
+            HQ1 = 1/(2*Ispin*(2*Ispin-1))*R20Q
             HQ2a= (0.5/(2*Ispin*(2*Ispin-1))**2)*(R2m2Q*R2p2Q)/wX                         
             HQ2b = (0.5/(2*Ispin*(2*Ispin-1))**2)*(R2m1Q*R2p1Q)/wX
 
