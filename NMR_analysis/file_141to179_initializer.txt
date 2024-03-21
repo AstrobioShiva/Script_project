@@ -1,3 +1,4 @@
+******************************-8HQ Y rotation****************************
 #****************provide initial values*****************************************
 initializer_list = [                                                                    
     {'gamma': 1, 'center_1': 0.7, 'split_1': 1, 'center_2': -5, 'split_2': 1, 'A': 1, 'offset': 0.}, #141
@@ -7,7 +8,7 @@ initializer_list = [
     {'gamma': 1, 'center_1': -4, 'split_1': 1, 'center_2': -6, 'split_2': 1, 'A': 1, 'offset': 0.}, #145
     {'gamma': 1, 'center_1': -4, 'split_1': 1, 'center_2': -7, 'split_2' : 1, 'A': 1, 'offset': 0.}, #146
     {'gamma': 1, 'center_1': -6, 'split_1': 1, 'center_2': -9, 'split_2' : 1, 'A': 1, 'offset': 0.}, #147
-    {'gamma': 1, 'center_1': -9, 'split_1': 1, 'center_2': -11, 'split_2' : 1, 'A': 1, 'offset': 0.}, #148
+    {'gamma': 1, 'center_1': -9, 'split_1': 3, 'center_2': -11, 'split_2' : 3, 'A': 1, 'offset': 0.}, #148
     {'gamma': 1, 'center_1': -14, 'split_1': 1, 'center_2': -14, 'split_2' : 1, 'A': 1, 'offset': 0.}, #149
     {'gamma': 1, 'center_1': -20, 'split_1': 1, 'center_2': -20, 'split_2' : 1, 'A': 1, 'offset': 0.}, #150
     {'gamma': 1, 'center_1': -24, 'split_1': 1, 'center_2': -24, 'split_2' : 1, 'A': 1, 'offset': 0.}, #151
@@ -15,12 +16,12 @@ initializer_list = [
     {'gamma': 1, 'center_1': -30, 'split_1': 1, 'center_2': -30, 'split_2' : 1, 'A': 1, 'offset': 0.}, #153
     {'gamma': 1, 'center_1': -27, 'split_1': 1, 'center_2': -31, 'split_2' : 1, 'A': 1, 'offset': 0.}, #154
     {'gamma': 1, 'center_1': -22, 'split_1': 1, 'center_2': -27, 'split_2' : 1, 'A': 1, 'offset': 0.}, #155
-    {'gamma': 1, 'center_1': -16, 'split_1': 1, 'center_2': -20, 'split_2' : 1, 'A': 1, 'offset': 0.}, #156
+    {'gamma': 1, 'center_1': -16, 'split_1': 5, 'center_2': -21, 'split_2' : 5, 'A': 1, 'offset': 0.}, #156
     {'gamma': 1, 'center_1': -9, 'split_1': 1, 'center_2': -14, 'split_2' : 1, 'A': 1, 'offset': 0.}, #157
     {'gamma': 1, 'center_1': -7, 'split_1': 5, 'center_2': -7, 'split_2' : 5, 'A': 2, 'offset': 0.}, #158
     {'gamma': 1, 'center_1': -3, 'split_1': 5, 'center_2': -4, 'split_2' : 5, 'A': 1, 'offset': 0.}, #159
     {'gamma': 1, 'center_1': -3, 'split_1': 1, 'center_2': -6, 'split_2' : 1, 'A': 1, 'offset': 0.}, #160
-    {'gamma': 1, 'center_1': -3, 'split_1': 1, 'center_2': -8, 'split_2' : 1, 'A': 2, 'offset': 0.}, #161
+    {'gamma': 1, 'center_1': -3, 'split_1': 3, 'center_2': -8, 'split_2' : 3, 'A': 2, 'offset': 0.}, #161
     {'gamma': 1, 'center_1': -4, 'split_1': 3, 'center_2': -4, 'split_2' : 3, 'A': 2, 'offset': 0.}, #162                                                                   
     {'gamma': 1, 'center_1': -5, 'split_1': 1, 'center_2': 0.7, 'split_2': 1, 'A': 1, 'offset': 0.}, #163
     {'gamma': 1, 'center_1': -8, 'split_1': 1, 'center_2': -3, 'split_2' : 3, 'A': 1, 'offset': 0.}, # 164
@@ -36,7 +37,7 @@ initializer_list = [
     {'gamma': 1, 'center_1': -14, 'split_1': 2, 'center_2': -21, 'split_2' : 2, 'A': 1, 'offset': 0.}, #174
     {'gamma': 1, 'center_1': -8, 'split_1': 5, 'center_2': -14, 'split_2' : 5, 'A': 1, 'offset': 0.}, #175
     {'gamma': 1, 'center_1': -6, 'split_1': 5, 'center_2': -7, 'split_2' : 5, 'A': 1, 'offset': 0.}, #176
-    {'gamma': 1, 'center_1': -5, 'split_1': 3, 'center_2': -10, 'split_2' : 3, 'A': 2, 'offset': 0.}, #177
-    {'gamma': 1, 'center_1': 1.5, 'split_1': 1.5, 'center_2': -6, 'split_2' : 1.5, 'A': 2, 'offset': 0.},#178
-    {'gamma': 1, 'center_1': -0.5, 'split_1': 1, 'center_2': -5, 'split_2' : 1, 'A': 2, 'offset': 0.}, #179
+    {'gamma': 1, 'center_1': -4, 'split_1': 3, 'center_2': -8, 'split_2' : 3, 'A': 2, 'offset': 0.}, #177
+    {'gamma': 1, 'center_1': 0, 'split_1': 3, 'center_2': -5, 'split_2' : 3, 'A': 2, 'offset': 0.},#178
+    {'gamma': 1, 'center_1': -0.5, 'split_1': 5, 'center_2': -5, 'split_2' : 5, 'A': 2, 'offset': 0.}, #179
     ]

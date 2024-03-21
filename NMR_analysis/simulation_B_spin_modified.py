@@ -56,7 +56,7 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Lab
 
-    a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    a, b, c = 45*np.pi/180, 30*np.pi/180, 90*np.pi/180
     zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
     alpha, beta, gama = 00*np.pi/180, 0*np.pi/180, 0*np.pi/180
 

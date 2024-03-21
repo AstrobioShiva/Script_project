@@ -28,7 +28,7 @@ delta_ppm = -8.527934442343977  #chemical shift anisotropy (CSA) (ppm)
 eta = -0.4711576055124597   #eta of CSA
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
-Sxy_set = [500]; Sxz_set = [500]; Syz_set = [500]                #Use ACS values for different sites
+Sxy_set = [5]; Sxz_set = [5]; Syz_set = [5]                #Use ACS values for different sites
 
 for k in (range(len(Sxy_set))):
     Sxy = Sxy_set[k]; Sxz = Sxz_set[k]; Syz = Syz_set[k]
@@ -56,9 +56,9 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Lab
 
-    a, b, c =0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    a, b, c =45*np.pi/180, 50*np.pi/180, 30*np.pi/180
     zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    alpha, beta, gama = 00*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    alpha, beta, gama = 10*np.pi/180, 50*np.pi/180, 110*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
