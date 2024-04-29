@@ -7,35 +7,32 @@ w0 = 192.55 #input for 11B
 # print(w0)
 wX = w0*10**6 #actual freq in Hz
 
-ntheta  = 500
-nphi = 500
-
-dangle  = np.pi/Nptx
+dangle  = 2*np.pi/Nptx
 
 #Spin Quantum Number
 Ispin = 3/2
 
 ########### Quadrupolar coupling tensor #########################
 #coupling values for --8HQ(ipc2)B (taken from magres files)
-CQ_M = 0.01 #CQ in MHz
-Qeta = -0.91 #eta of Q
+CQ_M = 12 #CQ in MHz
+Qeta = 0.5 #eta of Q
 
 # Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
-Siso_ppm = 10.0 #isotropic chemical shift + offset(ppm)
+Siso_ppm = 0 #isotropic chemical shift + offset(ppm)
 Siso = Siso_ppm*w0    
-delta_ppm = -12.7965  #chemical shift anisotropy (CSA) (ppm)
-eta = 0.4713  #eta of CSA
+delta_ppm = 3000  #chemical shift anisotropy (CSA) (ppm)
+eta = 0.4  #eta of CSA
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
-Sxy_set = [2.2978]; Sxz_set = [2.69305]; Syz_set = [2.40795]                #Use ACS values for different sites
+Sxy_set = [1500]; Sxz_set = [1500]; Syz_set = [1500]                #Use ACS values for different sites
 
 for k in (range(len(Sxy_set))):
     Sxy = Sxy_set[k]; Sxz = Sxz_set[k]; Syz = Syz_set[k]
 #************************************************************************************************
 
-    freq1D = np.zeros((Nptx+1,1))
-    freq2D = np.zeros((Nptx+1,1))
-    freq3D = np.zeros((Nptx+1,1))
+    freq3212 = np.zeros((Nptx+1,1))
+    freq1212 = np.zeros((Nptx+1,1))
+    freq1232 = np.zeros((Nptx+1,1))
     freqSUM = np.zeros((Nptx+1,1))
     XX = np.zeros((Nptx+1,1))
     freqDIFF = np.zeros((Nptx+1,1))
@@ -55,9 +52,9 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
-    a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    zeta, lamda, nu = 0*np.pi/180,0*np.pi/180, 0*np.pi/180
-    alpha, beta, gamma =260*np.pi/180, 0*np.pi/180,45*np.pi/180
+    a, b, c = 30*np.pi/180, 70*np.pi/180, 50*np.pi/180
+    zeta, lamda, nu = 110*np.pi/180, 30*np.pi/180, 45*np.pi/180
+    alpha, beta, gamma =0*np.pi/180, 0*np.pi/180,0*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
@@ -142,12 +139,12 @@ for k in (range(len(Sxy_set))):
 
         #********************change made from original code according to theory in next line**************************
             #****************coefficients are from code nmr_eq_coefficients*********************************************
-            freq1D[j] = 6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)      # 3/2 <-> 1/2
-            freq2D[j] = 0*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 6*np.real(HQ2a) + 12*np.real(HQ2b) # 1/2 <-> -1/2
-            freq3D[j] = -6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)  #-1/2   <-> -3/2                                                                                    #-1/2<->-3/2
+            freq3212[j] = 6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)      # 3/2 <-> 1/2
+            freq1212[j] = 0*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 6*np.real(HQ2a) + 12*np.real(HQ2b) # 1/2 <-> -1/2
+            freq1232[j] = -6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)  #-1/2   <-> -3/2                                                                                    #-1/2<->-3/2
 
-            freqSUM[j] = freq1D[j]+freq2D[j] + freq3D[j]          #3/2 <-> 1/2 + 1/2 <-> -1/2 + -1/2   <-> -3/2  transition 
-            freqDIFF[j] = freq1D[j]-freq3D[j]                     #3/2 <-> 1/2 - -1/2   <-> -3/2  transition 
+            freqSUM[j] = freq3212[j]+freq1212[j] + freq1232[j]          #3/2 <-> 1/2 + 1/2 <-> -1/2 + -1/2   <-> -3/2  transition 
+            freqDIFF[j] = freq3212[j]-freq1232[j]                     #3/2 <-> 1/2 - -1/2   <-> -3/2  transition 
             
             #the coeffient are taken from coefficients in freq equation
             qcsa[j] = 6*np.real(HQCSA)
@@ -158,8 +155,8 @@ for k in (range(len(Sxy_set))):
             XX[j]=(ang*180/np.pi)
             ang = ang + dangle
         
-        data = np.column_stack((XX, np.real(freqSUM), np.real(freqDIFF), np.real(freq1D), np.real(freq2D), np.real(freq3D) ,np.real(qacs), np.real(qcsa), np.real(qacs_anti)))
+        data = np.column_stack((XX, np.real(freqSUM), np.real(freqDIFF), np.real(freq3212), np.real(freq1212), np.real(freq1232) ,np.real(qacs), np.real(qcsa), np.real(qacs_anti)))
 
-        df[i]= pd.DataFrame(data, columns=['angle', 'freq_sum', 'freq_diff', 'freq_1D', 'freq_2D', 'freq_3D','acs', 'csa', 'acs_anti'])
+        df[i]= pd.DataFrame(data, columns=['angle', 'freq_sum', 'freq_diff', 'freq_3212', 'freq_1212', 'freq_1232','acs', 'csa', 'acs_anti'])
 
         df[i].to_csv(f'{file_path}{text[i]}_set{k+1}_B.csv', index=True)
