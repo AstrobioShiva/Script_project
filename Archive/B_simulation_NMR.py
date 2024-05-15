@@ -1,3 +1,5 @@
+#This code had issues in defining HQACS and HQCSA functions. The modified code is simulation_B_spin_modified.py
+
 from libraries import *
 from functions import Rabc, Quad, ChemShift, AntiShift
 #*******************************Input Parameters********************************************
