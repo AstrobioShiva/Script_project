@@ -13,15 +13,16 @@ dangle  = 2*np.pi/Nptx
 Ispin = 3/2
 
 ########### Quadrupolar coupling tensor #########################
-#coupling values for --8HQ(ipc2)B (taken from magres files)
-CQ_M = 12 #CQ in MHz
-Qeta = 0.5 #eta of Q
+#coupling values provided to match the magnitude of simulated with experimental data
+CQ_M = 0.01 #CQ in MHz
+Qeta = 0.9979 #eta of Q
 
 # Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
-Siso_ppm = 0 #isotropic chemical shift + offset(ppm)
-Siso = Siso_ppm*w0    
-delta_ppm = 3000  #chemical shift anisotropy (CSA) (ppm)
-eta = 0.4  #eta of CSA
+# Siso_ppm = 0 #isotropic chemical shift + offset(ppm) #value for Siso_ppm to match the magnitude of simulated with experimental data
+Siso_ppm = 20
+   
+delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
+eta = -0.5  #eta of CSA
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
 Sxy_set = [1500]; Sxz_set = [1500]; Syz_set = [1500]                #Use ACS values for different sites
@@ -45,16 +46,16 @@ for k in (range(len(Sxy_set))):
     Sxy = Sxy*w0; Sxz = Sxz*w0; Syz = Syz*w0;
 
     delta = delta_ppm*w0
-
+    Siso = Siso_ppm*w0 
 
     #*****Relative Tensor Orientations
     #input parameters
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
-    a, b, c = 30*np.pi/180, 70*np.pi/180, 50*np.pi/180
-    zeta, lamda, nu = 110*np.pi/180, 30*np.pi/180, 45*np.pi/180
-    alpha, beta, gamma =0*np.pi/180, 0*np.pi/180,0*np.pi/180
+    a, b, c = 50*np.pi/180, 40*np.pi/180, 30*np.pi/180
+    zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
@@ -68,9 +69,9 @@ for k in (range(len(Sxy_set))):
 
     # 2nd-rank chemical shift anisotropy (CSA)
 
-    Csa[0, 0] = (eta - 1) * delta / 2
-    Csa[1, 1] = -(1 + eta) * delta / 2
-    Csa[2, 2] = delta
+    Csa[0, 0] = (eta - 1) * delta / 2  + Siso
+    Csa[1, 1] = -(1 + eta) * delta / 2 + Siso
+    Csa[2, 2] = delta + Siso
 
 
     # 1st-rank antisymmetric chemical shift (ACS)
@@ -125,7 +126,7 @@ for k in (range(len(Sxy_set))):
             R1m1acs, R1p1acs = AntiShift(AcsQXG,ct, st, cp, sp);
 
             #********************change made from original code according to theor415y in next line**************************
-            HCSA1 = (Siso + R20cs)                                               #Siso = 1/3(Gzz_csa + Gyy_csa + Gxx_csa)
+            HCSA1 = (R20cs + 1/3*(CsaQXG[2, 2] + CsaQXG[0,0] + CsaQXG[1,1]))                                                # Siso = 1/3*(CsaQXG[2, 2] + CsaQXG[0,0] + CsaQXG[1,1]); Siso added to CSA tensor
             HQCSA = -(0.5/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
             HQACS = (0.5/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
 

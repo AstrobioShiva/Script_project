@@ -2,11 +2,12 @@ from symfit import parameters, variables, sin, cos, Fit
 from symfit.core.minimizers import DifferentialEvolution, BFGS
 from symfit.core.objectives import LogLikelihood
 from scipy import optimize
-from sympy import *
-init_printing(use_unicode=True)
+import sympy as sym
+# init_printing(use_unicode=True)
 import tabulate as tabulate
 import numpy as np
 import matplotlib.pyplot as plt
+
 import pandas as pd
 import csv
 from tabulate import tabulate
