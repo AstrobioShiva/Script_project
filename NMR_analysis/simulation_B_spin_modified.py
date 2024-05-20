@@ -14,15 +14,21 @@ Ispin = 3/2
 
 ########### Quadrupolar coupling tensor #########################
 #coupling values provided to match the magnitude of simulated with experimental data
-CQ_M = 0.01 #CQ in MHz
-Qeta = 0.9979 #eta of Q
+# CQ_M = 0.01 #CQ in MHz
+# Qeta = 0.9979 #eta of Q
 
-# Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
-# Siso_ppm = 0 #isotropic chemical shift + offset(ppm) #value for Siso_ppm to match the magnitude of simulated with experimental data
-Siso_ppm = 20
+# # Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
+# # Siso_ppm = 0 #isotropic chemical shift + offset(ppm) #value for Siso_ppm to match the magnitude of simulated with experimental data
+# Siso_ppm = 0
    
-delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
-eta = -0.5  #eta of CSA
+# delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
+# eta = -0.5  #eta of CSA
+
+CQ_M = 10 
+Qeta = 0.85 
+Siso_ppm = 30
+delta_ppm = -25  
+eta = -0.6  
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
 Sxy_set = [1500]; Sxz_set = [1500]; Syz_set = [1500]                #Use ACS values for different sites
@@ -53,7 +59,7 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
-    a, b, c = 50*np.pi/180, 40*np.pi/180, 30*np.pi/180
+    a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
     zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
     alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
@@ -128,7 +134,7 @@ for k in (range(len(Sxy_set))):
             #********************change made from original code according to theor415y in next line**************************
             HCSA1 = (R20cs + 1/3*(CsaQXG[2, 2] + CsaQXG[0,0] + CsaQXG[1,1]))                                                # Siso = 1/3*(CsaQXG[2, 2] + CsaQXG[0,0] + CsaQXG[1,1]); Siso added to CSA tensor
             HQCSA = -(0.5/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
-            HQACS = (0.5/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
+            HQACS = -(0.5/(2*Ispin*(2*Ispin-1)))*(R2p1Q*R1m1acs - R2m1Q*R1p1acs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
 
             
             HQ1 = 1/(2*Ispin*(2*Ispin-1))*R20Q

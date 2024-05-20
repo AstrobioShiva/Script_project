@@ -16,14 +16,14 @@ Ispin = 5/2
 #Quadrupolar Coupling Tensor
 #coupling values for NAV (taken from paper https://pubmed.ncbi.nlm.nih.gov/22027340/)
 
-CQ_M = 2 #CQ in MHz
+CQ_M = 1 #CQ in MHz
 Qeta = 0.5 #eta of Q
 
 # Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
 
-Siso_ppm = 0 #isotropic chemical shift + offset(ppm)
+Siso_ppm = 10 #isotropic chemical shift + offset(ppm)
 Siso = Siso_ppm*w0 
-delta_ppm = 300.  #chemical shift anisotropy (CSA) (ppm)
+delta_ppm = 500.  #chemical shift anisotropy (CSA) (ppm)
 eta = 0.4   #eta of CSA
 
 
@@ -129,7 +129,7 @@ for i in (range(len(text))):
         R2m1cs, R20cs, R2p1cs = ChemShift(CsaQXG,ct, st, s2t, c2t, cp, sp, c2p, s2p)
         R1m1acs, R1p1acs = AntiShift(AcsQXG,ct, st, cp, sp);
         #********************change made from original code according to theor415y in next line**************************
-        HCSA1 = (R20cs)                                               # Removed Siso (= 1/3(Gzz_csa + Gyy_csa + Gxx_csa)); Siso added to CSA tensor
+        HCSA1 = (R20cs  + Siso)                                               # Siso (= 1/3(Gzz_csa + Gyy_csa + Gxx_csa)); Siso added to CSA tensor
         HQCSA = -(0.5/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
         HQACS = (0.5/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R1p1acs-R2p1Q*R1m1acs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
 
