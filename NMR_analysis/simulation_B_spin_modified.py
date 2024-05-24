@@ -60,8 +60,8 @@ for k in (range(len(Sxy_set))):
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
     a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    zeta, lamda, nu = 10*np.pi/180, 20*np.pi/180, 80*np.pi/180
+    alpha, beta, gamma = 90*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
