@@ -24,11 +24,11 @@ Ispin = 3/2
 # delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
 # eta = -0.5  #eta of CSA
 
-CQ_M = 10 
-Qeta = 0.85 
-Siso_ppm = 30
-delta_ppm = -25  
-eta = -0.6  
+CQ_M = -0.009 
+Qeta = 1.28 
+Siso_ppm = -11.9
+delta_ppm = -14.8  
+eta = -1.64  
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
 Sxy_set = [1500]; Sxz_set = [1500]; Syz_set = [1500]                #Use ACS values for different sites
@@ -60,8 +60,8 @@ for k in (range(len(Sxy_set))):
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
     a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    zeta, lamda, nu = 10*np.pi/180, 20*np.pi/180, 80*np.pi/180
-    alpha, beta, gamma = 90*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 45*np.pi/180
+    alpha, beta, gamma = 154*np.pi/180, 153.1*np.pi/180, 181*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
