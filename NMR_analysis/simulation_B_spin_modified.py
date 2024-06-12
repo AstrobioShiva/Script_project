@@ -24,8 +24,8 @@ Ispin = 3/2
 # delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
 # eta = -0.5  #eta of CSA
 
-CQ_M = -0.009 
-Qeta = 1.28 
+CQ_M = 1000 
+Qeta = 1 
 Siso_ppm = -11.9
 delta_ppm = -14.8  
 eta = -1.64  
@@ -60,8 +60,8 @@ for k in (range(len(Sxy_set))):
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
     a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 45*np.pi/180
-    alpha, beta, gamma = 154*np.pi/180, 153.1*np.pi/180, 181*np.pi/180
+    zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
