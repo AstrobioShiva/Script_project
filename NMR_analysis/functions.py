@@ -72,6 +72,8 @@ def AntiShift(AcsQXG, ct, st, cp, sp):
     return[R1m1acs, R1p1acs]
 
 def fourier3(x, a, b, c):
-    return a + b*np.cos(2*x*np.pi/180.) + c*np.sin(2*x*np.pi/180.)
+    return a + b*np.cos(2*np.radians(x)) + c*np.sin(2*np.radians(x))
 def fourier5(x, a, b, c, d, e):
-    return a + b*np.cos(2*x*np.pi/180.) + c*np.sin(2*x*np.pi/180.) + d*np.cos(4*x*np.pi/180.) + e*np.sin(4*x*np.pi/180)
+    return a + b*np.cos(2*np.radians(x)) + c*np.sin(2*np.radians(x)) + d*np.cos(4*np.radians(x)) + e*np.sin(4*np.radians(x))
+def fourier6(x, a1, b1, c1, a2, b2, c2):
+    return fourier3(x, a1, b1, c1)*fourier3(x, a2, b2, c2)

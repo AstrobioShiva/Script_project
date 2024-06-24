@@ -24,11 +24,11 @@ Ispin = 3/2
 # delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
 # eta = -0.5  #eta of CSA
 
-CQ_M = 1000 
-Qeta = 1 
+CQ_M = 10
+Qeta = 0.9 
 Siso_ppm = -11.9
 delta_ppm = -14.8  
-eta = -1.64  
+eta = 0.8  
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
 Sxy_set = [1500]; Sxz_set = [1500]; Syz_set = [1500]                #Use ACS values for different sites
