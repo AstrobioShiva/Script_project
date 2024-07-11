@@ -3,11 +3,11 @@ from functions import Rabc, Quad, ChemShift, AntiShift
 #*******************************Input Parameters********************************************
 Nptx = 64
 B0 = 14.1 #magnetic field
-w0 = 192.55 #input for 11B
+w0 = 192.5 #input for 11B
 # print(w0)
 wX = w0*10**6 #actual freq in Hz
 
-dangle  = 2*np.pi/Nptx
+dangle  = np.pi/Nptx
 
 #Spin Quantum Number
 Ispin = 3/2
@@ -24,14 +24,14 @@ Ispin = 3/2
 # delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
 # eta = -0.5  #eta of CSA
 
-CQ_M = 10
-Qeta = 0.9 
-Siso_ppm = -11.9
-delta_ppm = -14.8  
-eta = 0.8  
+CQ_M = 3.3
+Qeta = 0.21 
+Siso_ppm = -13.5
+delta_ppm = 13.8 
+eta = 0.6  
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
-Sxy_set = [1500]; Sxz_set = [1500]; Syz_set = [1500]                #Use ACS values for different sites
+Sxy_set = [500]; Sxz_set = [500]; Syz_set = [500]                #Use ACS values for different sites
 
 for k in (range(len(Sxy_set))):
     Sxy = Sxy_set[k]; Sxz = Sxz_set[k]; Syz = Syz_set[k]
@@ -59,8 +59,8 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
-    a, b, c = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
-    zeta, lamda, nu = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    a, b, c = 94*np.pi/180, 28*np.pi/180, 87*np.pi/180
+    zeta, lamda, nu = 10*np.pi/180, 20*np.pi/180, 30*np.pi/180
     alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
     # tensor parameter at PAS
