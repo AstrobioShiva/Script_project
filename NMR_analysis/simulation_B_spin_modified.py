@@ -24,11 +24,11 @@ Ispin = 3/2
 # delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
 # eta = -0.5  #eta of CSA
 
-CQ_M = 3.3
-Qeta = 0.21 
-Siso_ppm = -13.5
-delta_ppm = 13.8 
-eta = 0.6  
+CQ_M = 2.18
+Qeta = 0.935 
+Siso_ppm = -8
+delta_ppm = -9.08
+eta = 0.88  
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
 Sxy_set = [500]; Sxz_set = [500]; Syz_set = [500]                #Use ACS values for different sites
@@ -59,9 +59,9 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
-    a, b, c = 94*np.pi/180, 28*np.pi/180, 87*np.pi/180
-    zeta, lamda, nu = 10*np.pi/180, 20*np.pi/180, 30*np.pi/180
-    alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    a, b, c = 94.1*np.pi/180, 72.4*np.pi/180, 91.4*np.pi/180
+    zeta, lamda, nu = 76*np.pi/180, 149*np.pi/180, -84*np.pi/180
+    alpha, beta, gamma = 153.5*np.pi/180, 153.45*np.pi/180, 180*np.pi/180
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
@@ -117,9 +117,8 @@ for k in (range(len(Sxy_set))):
         ang = 0 #starting angle
         for j in range(0, Nptx+1):
             
-
+            aphi = [-(ang), 0, np.pi/2]   #changes to be made from original code as initial position for x, z orientation should match the diagram [-x rot: (phi = -pi/2, theta = 0, 0)] [-z rot: (phi = pi/2, theta = -pi/2, 0)]
             atheta = [np.pi/2, ang, -ang] #-z, y, -x rotation
-            aphi = [-ang, 0, np.pi/2]
             
             theta = atheta[i] 
             phi = aphi[i]
