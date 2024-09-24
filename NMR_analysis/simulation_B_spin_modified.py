@@ -26,8 +26,8 @@ Ispin = 3/2
 
 CQ_M = 2.182
 Qeta = 0.915 
-Siso_ppm = -8
-delta_ppm = -9.25
+Siso_ppm = 0
+csa_ppm = -0
 eta = 0.3  
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
@@ -51,7 +51,7 @@ for k in (range(len(Sxy_set))):
     CQ = CQ_M*10**6/(2*Ispin*(2*Ispin-1))
     Sxy = Sxy*w0; Sxz = Sxz*w0; Syz = Syz*w0;
 
-    delta = delta_ppm*w0
+    csa = csa_ppm*w0
     Siso = Siso_ppm*w0 
 
     #*****Relative Tensor Orientations
@@ -60,7 +60,7 @@ for k in (range(len(Sxy_set))):
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
     a, b, c = 362.3*np.pi/180, 87.8*np.pi/180, 75.2*np.pi/180
-    zeta, lamda, nu =82.1*np.pi/180, 37*np.pi/180, 335*np.pi/180
+    zeta, lamda, nu = 82.1*np.pi/180, 37*np.pi/180, 335*np.pi/180
     alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
     # tensor parameter at PAS
@@ -75,9 +75,9 @@ for k in (range(len(Sxy_set))):
 
     # 2nd-rank chemical shift anisotropy (CSA)
 
-    Csa[0, 0] = (eta - 1) * delta / 2  + Siso
-    Csa[1, 1] = -(1 + eta) * delta / 2 + Siso
-    Csa[2, 2] = delta + Siso
+    Csa[0, 0] = (eta - 1) * csa / 2  + Siso
+    Csa[1, 1] = -(1 + eta) * csa / 2 + Siso
+    Csa[2, 2] = csa + Siso
 
 
     # 1st-rank antisymmetric chemical shift (ACS)
@@ -117,7 +117,7 @@ for k in (range(len(Sxy_set))):
         ang = 0 #starting angle
         for j in range(0, Nptx+1):
             
-            aphi = [-(ang), 0, np.pi/2]   #changes to be made from original code as initial position for x, z orientation should match the diagram [-x rot: (phi = -pi/2, theta = 0, 0)] [-z rot: (phi = pi/2, theta = -pi/2, 0)]
+            aphi = [-(ang), 0, np.pi/2]   #changes to be made from original code as initial position for x, z orientation should match the diagram in Vosegaard et. al [-x rot: (phi = -pi/2, theta = 0, 0)] [-z rot: (phi = pi/2, theta = -pi/2, 0)]?
             atheta = [np.pi/2, ang, -ang] #-z, y, -x rotation
             
             theta = atheta[i] 
