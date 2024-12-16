@@ -27,4 +27,5 @@ from iminuit.cost import LeastSquares
 
 # display iminuit version
 import iminuit
+from jacobi import propagate
 print("iminuit version:", iminuit.__version__)

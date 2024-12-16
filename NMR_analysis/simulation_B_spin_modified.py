@@ -25,10 +25,10 @@ Ispin = 3/2
 # eta = -0.5  #eta of CSA
 
 CQ_M = 2.182
-Qeta = 0.915 
-Siso_ppm = 0
-csa_ppm = -0
-eta = 0.3  
+Qeta = 0.92 
+Siso_ppm = -8
+csa_ppm = -9.3
+eta = 0.30 
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
 Sxy_set = [500]; Sxz_set = [500]; Syz_set = [500]                #Use ACS values for different sites
@@ -60,7 +60,7 @@ for k in (range(len(Sxy_set))):
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
     a, b, c = 362.3*np.pi/180, 87.8*np.pi/180, 75.2*np.pi/180
-    zeta, lamda, nu = 82.1*np.pi/180, 37*np.pi/180, 335*np.pi/180
+    zeta, lamda, nu =82.1*np.pi/180, 37*np.pi/180, 335*np.pi/180
     alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
 
     # tensor parameter at PAS
