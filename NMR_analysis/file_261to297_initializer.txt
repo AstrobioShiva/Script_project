@@ -1,0 +1,41 @@
+******************************+8HQ Y rotation****************************#
+****************provide initial values*****************************************
+initializer_list = [
+    {'gamma': 1, 'center_1': -11, 'split_1': 2, 'center_2': -18, 'split_2' : 2, 'A': 1, 'offset': 0.}, #261
+    {'gamma': 1, 'center_1': -11, 'split_1': 2, 'center_2': -11, 'split_2' : 2, 'A': 1, 'offset': 0.}, #262
+    {'gamma': 1, 'center_1': -10, 'split_1': 2, 'center_2': -10, 'split_2' : 2, 'A': 1, 'offset': 0.}, #263
+    {'gamma': 1, 'center_1': -12, 'split_1': 2, 'center_2': -12, 'split_2' : 2, 'A': 1, 'offset': 0.}, #264
+    {'gamma': 1, 'center_1': -17, 'split_1': 3, 'center_2': -17, 'split_2' : 3, 'A': 1, 'offset': 0.}, #265                                                                   
+    {'gamma': 1, 'center_1': -20, 'split_1': 3, 'center_2': -20, 'split_2': 3, 'A': 1, 'offset': 0.}, #266
+    {'gamma': 1, 'center_1': -23, 'split_1': 3, 'center_2': -23, 'split_2' : 3, 'A': 1, 'offset': 0.}, # 267
+    {'gamma': 1, 'center_1': -23, 'split_1': 2, 'center_2': -23, 'split_2' : 2, 'A': 1, 'offset': 0.}, #268
+    {'gamma': 1, 'center_1': -21, 'split_1': 5, 'center_2': -21, 'split_2' : 5, 'A': 1, 'offset': 0.}, #269
+    {'gamma': 2, 'center_1': -17, 'split_1': 3, 'center_2': -17, 'split_2': 3, 'A': 1, 'offset': 0.}, #270                                                                   
+    {'gamma': 1, 'center_1': -11, 'split_1': 5, 'center_2': -13, 'split_2' : 5, 'A': 1, 'offset': 0.}, #271
+    {'gamma': 1, 'center_1': -5, 'split_1': 3, 'center_2': -14, 'split_2' : 3, 'A': 1, 'offset': 0.}, #272
+    {'gamma': 1, 'center_1': -0, 'split_1': 3, 'center_2': -18, 'split_2' : 3, 'A': 1, 'offset': 0.}, #273
+    {'gamma': 1, 'center_1': 2, 'split_1': 3, 'center_2': -24, 'split_2' : 3, 'A': 2, 'offset': 0.}, #274
+    {'gamma': 1, 'center_1': 2, 'split_1': 3, 'center_2': -30, 'split_2' : 3, 'A': 1, 'offset': 0.}, #275                                                                   
+    {'gamma': 1, 'center_1': -1, 'split_1': 3, 'center_2': -32, 'split_2': 3, 'A': 1, 'offset': 0.}, #276
+    {'gamma': 1, 'center_1': -4, 'split_1': 1, 'center_2': -30, 'split_2' : 3, 'A': 1, 'offset': 0.}, # 277
+    {'gamma': 1, 'center_1': -7, 'split_1': 2, 'center_2': -24, 'split_2' : 2, 'A': 1, 'offset': 0.}, #278
+    {'gamma': 1, 'center_1': -11, 'split_1': 2, 'center_2': -18, 'split_2' : 2, 'A': 1, 'offset': 0.}, #279 ###180 degree****
+    {'gamma': 1, 'center_1': -11, 'split_1': 2, 'center_2': -11, 'split_2' : 2, 'A': 1, 'offset': 0.}, #280                                                                 
+    {'gamma': 1, 'center_1': -10, 'split_1': 2, 'center_2': -10, 'split_2' : 2, 'A': 1, 'offset': 0.}, #281
+    {'gamma': 1, 'center_1': -12, 'split_1': 2, 'center_2': -12, 'split_2' : 2, 'A': 1, 'offset': 0.}, #282
+    {'gamma': 1, 'center_1': -15, 'split_1': 3, 'center_2': -18, 'split_2' : 3, 'A': 1, 'offset': 0.}, #283                                                                  
+    {'gamma': 1, 'center_1': -20, 'split_1': 1, 'center_2': -21, 'split_2' : 1, 'A': 1, 'offset': 0.}, #284
+    {'gamma': 1, 'center_1': -22, 'split_1': 1, 'center_2': -25, 'split_2' : 1, 'A': 1, 'offset': 0.}, #285
+    {'gamma': 1, 'center_1': -24, 'split_1': 3, 'center_2': -24, 'split_2' : 3, 'A': 1, 'offset': 0.}, #286
+    {'gamma': 1, 'center_1': -22, 'split_1': 3, 'center_2': -22, 'split_2' : 3, 'A': 1, 'offset': 0.}, #287
+    {'gamma': 1, 'center_1': -18, 'split_1': 3, 'center_2': -18, 'split_2' : 3, 'A': 1, 'offset': 0.}, #288
+    {'gamma': 1, 'center_1': -12, 'split_1': 3, 'center_2': -12, 'split_2' : 3, 'A': 1, 'offset': 0.}, #289
+    {'gamma': 1, 'center_1': -9, 'split_1': 3, 'center_2': -9, 'split_2' : 3, 'A': 1, 'offset': 0.}, #290
+    {'gamma': 1, 'center_1': -2, 'split_1': 3, 'center_2': -18, 'split_2' : 3, 'A': 1, 'offset': 0.}, #291                                                                   
+    {'gamma': 1, 'center_1': 2, 'split_1': 3, 'center_2': -23, 'split_2': 3, 'A': 1, 'offset': 0.}, #292
+    {'gamma': 1, 'center_1': 1, 'split_1': 1, 'center_2': -30, 'split_2' : 1, 'A': 1, 'offset': 0.}, # 293
+    {'gamma': 1, 'center_1': -2, 'split_1': 1, 'center_2': -30, 'split_2' : 1, 'A': 1, 'offset': 0.}, #294
+    {'gamma': 1, 'center_1': -5, 'split_1': 1, 'center_2': -30, 'split_2' : 1, 'A': 1, 'offset': 0.}, #295
+    {'gamma': 1, 'center_1': -9, 'split_1': 1, 'center_2': -25, 'split_2' : 1, 'A': 1, 'offset': 0.}, #296                                                                 
+    {'gamma': 1, 'center_1': -12, 'split_1': 1, 'center_2': -15, 'split_2' : 1, 'A': 1, 'offset': 0.}, #297
+    ]

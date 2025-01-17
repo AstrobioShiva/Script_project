@@ -1,0 +1,25 @@
+B0 = 14.1 #magnetic field
+w0 = 192.55 #input for 11B
+# print(w0)
+wX = w0*10**6 #actual freq in Hz
+
+ntheta  = 500
+nphi = 500
+
+dangle  = np.pi/Nptx
+
+#Spin Quantum Number
+Ispin = 3/2
+
+
+
+########### Quadrupolar coupling tensor #########################
+#coupling values for --8HQ(ipc2)B (taken from magres files)
+CQ_M = 2.0990 #CQ in MHz
+Qeta = 0.9979 #eta of Q
+
+# Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
+Siso_ppm = 83.96700778109154 #isotropic chemical shift + offset(ppm)
+Siso = Siso_ppm*w0    
+delta_ppm = -8.527934442343977  #chemical shift anisotropy (CSA) (ppm)
+eta = -0.4711576055124597   #eta of CSA
