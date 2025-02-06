@@ -3,3 +3,4 @@
 /home/shiva/WMU/PhD/Scripts/phd_project/Python/NMR/NMR_analysis/__pycache__/
 /home/shiva/WMU/PhD/Scripts/phd_project/Python/NMR/NMR_analysis/angle_triangle.ipynb
 Data_simulation/*
+Data_exp/fit_data*.csv
