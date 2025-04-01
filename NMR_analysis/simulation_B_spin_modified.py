@@ -24,14 +24,14 @@ Ispin = 3/2
 # delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
 # eta = -0.5  #eta of CSA
 
-CQ_M = 2.182
+CQ_M = 20
 Qeta = 0.92 
-Siso_ppm = -8
-csa_ppm = -9.3
-eta = 0.30 
+Siso_ppm = 5
+delta_ppm = 15
+eta = 0.6
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
-Sxy_set = [500]; Sxz_set = [500]; Syz_set = [500]                #Use ACS values for different sites
+Sxy_set = [10000]; Sxz_set = [30000]; Syz_set = [50000]                #Use ACS values for different sites
 
 for k in (range(len(Sxy_set))):
     Sxy = Sxy_set[k]; Sxz = Sxz_set[k]; Syz = Syz_set[k]
@@ -51,7 +51,7 @@ for k in (range(len(Sxy_set))):
     CQ = CQ_M*10**6/(2*Ispin*(2*Ispin-1))
     Sxy = Sxy*w0; Sxz = Sxz*w0; Syz = Syz*w0;
 
-    csa = csa_ppm*w0
+    csa = delta_ppm*w0
     Siso = Siso_ppm*w0 
 
     #*****Relative Tensor Orientations

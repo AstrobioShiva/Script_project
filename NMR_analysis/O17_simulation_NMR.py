@@ -16,7 +16,7 @@ Ispin = 5/2
 #Quadrupolar Coupling Tensor
 #coupling values for NAV (taken from paper https://pubmed.ncbi.nlm.nih.gov/22027340/)
 
-CQ_M = 1 #CQ in MHz
+CQ_M = 10 #CQ in MHz
 Qeta = 0.5 #eta of Q
 
 # Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
@@ -27,7 +27,7 @@ delta_ppm = 500.  #chemical shift anisotropy (CSA) (ppm)
 eta = 0.4   #eta of CSA
 
 
-Sxy = 500; Sxz = 500; Syz = 500
+Sxy = 2000; Sxz = 1500; Syz = 2500
 
 #************************************************************************************************
 
