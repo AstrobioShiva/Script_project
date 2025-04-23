@@ -1,7 +1,7 @@
 from libraries import *
 from functions import Rabc, Quad, ChemShift, AntiShift
 #*******************************Input Parameters********************************************
-Nptx = 64
+Nptx = 64 #number of data points
 B0 = 14.1 #magnetic field
 w0 = 192.5 #input for 11B
 # print(w0)
@@ -24,14 +24,16 @@ Ispin = 3/2
 # delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
 # eta = -0.5  #eta of CSA
 
-CQ_M = 20
-Qeta = 0.92 
-Siso_ppm = 5
-delta_ppm = 15
-eta = 0.6
+
+# Values from CASTEP calculations
+CQ_M = 2.12      #CQ in MHz
+Qeta = 1.00
+Siso_ppm = -8   #isotropic chemical shift + offset(ppm)
+delta_ppm = -9.2  #chemical shift anisotropy (CSA) (ppm)
+eta = 0.46
 
 ######### Antisymmetric 1st-rank chemical shift tensor ##########
-Sxy_set = [10000]; Sxz_set = [30000]; Syz_set = [50000]                #Use ACS values for different sites
+Sxy_set = [3.075, -3.077]; Sxz_set = [2.877, 2.884]; Syz_set = [2.247, -2.244]                #Use ACS values for different sites
 
 for k in (range(len(Sxy_set))):
     Sxy = Sxy_set[k]; Sxz = Sxz_set[k]; Syz = Syz_set[k]
@@ -59,9 +61,10 @@ for k in (range(len(Sxy_set))):
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
 
-    a, b, c = 362.3*np.pi/180, 87.8*np.pi/180, 75.2*np.pi/180
-    zeta, lamda, nu =82.1*np.pi/180, 37*np.pi/180, 335*np.pi/180
-    alpha, beta, gamma = 0*np.pi/180, 0*np.pi/180, 0*np.pi/180
+    a, b, c = 47*np.pi/180, 95*np.pi/180, 76*np.pi/180
+    zeta, lamda, nu = -60*np.pi/180, 105*np.pi/180, -39.5*np.pi/180      
+    alpha, beta, gamma = 153.5*np.pi/180, 153.4*np.pi/180, 180*np.pi/180    
+    # using RHQ site 1 values
 
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
@@ -85,6 +88,8 @@ for k in (range(len(Sxy_set))):
     Acs[0, 1] = Sxy;  Acs[0, 2] = Sxz
     Acs[1, 0] = -Sxy; Acs[1, 2] = Syz
     Acs[2, 0] = -Sxz; Acs[2, 1] = -Syz
+    
+    # print(Acs)
 
     # Combining CSA and ACS
     CSPAS = Csa + Acs
@@ -117,7 +122,7 @@ for k in (range(len(Sxy_set))):
         ang = 0 #starting angle
         for j in range(0, Nptx+1):
             
-            aphi = [-(ang), 0, np.pi/2]   #changes to be made from original code as initial position for x, z orientation should match the diagram in Vosegaard et. al [-x rot: (phi = -pi/2, theta = 0, 0)] [-z rot: (phi = pi/2, theta = -pi/2, 0)]?
+            aphi = [-(ang), 0, np.pi/2]   
             atheta = [np.pi/2, ang, -ang] #-z, y, -x rotation
             
             theta = atheta[i] 
@@ -130,7 +135,7 @@ for k in (range(len(Sxy_set))):
             R2m1cs, R20cs, R2p1cs = ChemShift(CsaQXG,ct, st, s2t, c2t, cp, sp, c2p, s2p)
             R1m1acs, R1p1acs = AntiShift(AcsQXG,ct, st, cp, sp);
 
-            #********************change made from original code according to theor415y in next line**************************
+            #********************change made from original code according to theory in next line**************************
             HCSA1 = (R20cs + 1/3*(CsaQXG[2, 2] + CsaQXG[0,0] + CsaQXG[1,1]))                                                # Siso = 1/3*(CsaQXG[2, 2] + CsaQXG[0,0] + CsaQXG[1,1]); Siso added to CSA tensor
             HQCSA = -(0.5/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
             HQACS = -(0.5/(2*Ispin*(2*Ispin-1)))*(R2p1Q*R1m1acs - R2m1Q*R1p1acs)/wX; #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
@@ -155,14 +160,14 @@ for k in (range(len(Sxy_set))):
             #the coeffient are taken from coefficients in freq equation
             qcsa[j] = 6*np.real(HQCSA)
             qacs[j] = 6*np.real(HQACS)
-            qacs_anti[j] = 6*np.real(-HQACS)
+            # qacs_anti[j] = 6*np.real(-HQACS) #no need to calculate qacs_anti like this as we need to change the acs tensor components
         
             
             XX[j]=(ang*180/np.pi)
             ang = ang + dangle
         
-        data = np.column_stack((XX, np.real(freqSUM), np.real(freqDIFF), np.real(freq3212), np.real(freq1212), np.real(freq1232) ,np.real(qacs), np.real(qcsa), np.real(qacs_anti)))
+        data = np.column_stack((XX, np.real(freqSUM), np.real(freqDIFF), np.real(freq3212), np.real(freq1212), np.real(freq1232) ,np.real(qacs), np.real(qcsa)))
 
-        df[i]= pd.DataFrame(data, columns=['angle', 'freq_sum', 'freq_diff', 'freq_3212', 'freq_1212', 'freq_1232','acs', 'csa', 'acs_anti'])
+        df[i]= pd.DataFrame(data, columns=['angle', 'freq_sum', 'freq_diff', 'freq_3212', 'freq_1212', 'freq_1232','acs', 'csa'])
 
         df[i].to_csv(f'{file_path}{text[i]}_set{k+1}_B.csv', index=True)
