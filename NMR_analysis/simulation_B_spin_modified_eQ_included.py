@@ -1,0 +1,179 @@
+import numpy as np
+import pandas as  pd
+import os
+from functions import Rabc, Quad, ChemShift, AntiShift
+#*******************************Input Parameters********************************************
+Nptx = 64 #number of data points
+B0 = 14.1 #magnetic field
+w0 = 192.5 #input for 11B in MHz
+# print(w0)
+wX = w0*10**6 #actual freq in Hz
+
+dangle  = np.pi/Nptx
+conv_fac = 234.9647
+#Spin Quantum Number
+Ispin = 3/2
+Q = 0.0406
+########### Quadrupolar coupling tensor #########################
+#coupling values provided to match the magnitude of simulated with experimental data
+# CQ_M = 0.01 #CQ in MHz
+# Qeta = 0.9979 #eta of Q
+
+# # Symmetric 2nd-rank chemical shift anisotropy (CSA)   tensor
+# # Siso_ppm = 0 #isotropic chemical shift + offset(ppm) #value for Siso_ppm to match the magnitude of simulated with experimental data
+# Siso_ppm = 0
+   
+# delta_ppm = -10  #chemical shift anisotropy (CSA) (ppm)
+# eta = -0.5  #eta of CSA
+
+
+# Values from CASTEP calculations
+CQ_M = 2.12      #CQ in MHz
+Qeta = 1.00
+Siso_ppm = -8   #isotropic chemical shift + offset(ppm)
+delta_ppm = -9.2  #chemical shift anisotropy (CSA) (ppm)
+eta = 0.46
+
+######### Antisymmetric 1st-rank chemical shift tensor ##########
+Sxy_set = [3.075, -3.077]; Sxz_set = [2.877, 2.884]; Syz_set = [2.247, -2.244]                #Use ACS values for different sites
+
+for k in (range(len(Sxy_set))):
+    Sxy = Sxy_set[k]; Sxz = Sxz_set[k]; Syz = Syz_set[k]
+#************************************************************************************************
+
+    freq3212 = np.zeros((Nptx+1,1))
+    freq1212 = np.zeros((Nptx+1,1))
+    freq1232 = np.zeros((Nptx+1,1))
+    freqSUM = np.zeros((Nptx+1,1))
+    XX = np.zeros((Nptx+1,1))
+    freqDIFF = np.zeros((Nptx+1,1))
+    qacs = np.zeros((Nptx+1,1))
+    qcsa = np.zeros((Nptx+1,1))
+    qacs_anti = np.zeros((Nptx+1,1))
+
+
+    CQ = CQ_M/(2*Ispin*(2*Ispin-1)) #value in MHz
+    CQ = CQ*10**6                   #value in Hz
+    Sxy = Sxy*w0; Sxz = Sxz*w0; Syz = Syz*w0;
+
+    csa = delta_ppm*w0
+    Siso = Siso_ppm*w0 
+
+    #*****Relative Tensor Orientations
+    #input parameters
+    #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
+    # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
+    # using RHQ site 1 values
+    a, b, c = 47*np.pi/180, 95*np.pi/180, 76*np.pi/180
+    zeta, lamda, nu = -53*np.pi/180, 163*np.pi/180, 90*np.pi/180     
+    alpha, beta, gamma = 153.5*np.pi/180, 153.4*np.pi/180, 180*np.pi/180    
+    
+    # zeta, lamda, nu = -60*np.pi/180, 105*np.pi/180, -39.5*np.pi/180  #previous values used for simulation in manuscript  
+     
+    # tensor parameter at PAS
+    QPAS = np.zeros((3, 3))
+    Csa = np.zeros((3, 3))
+    Acs = np.zeros((3, 3))
+
+    #Quadrupolar interactions
+    QPAS[0, 0] = (Qeta - 1) * CQ / 2
+    QPAS[1, 1] = -(1 + Qeta) * CQ / 2
+    QPAS[2, 2] = CQ
+
+    # 2nd-rank chemical shift anisotropy (CSA)
+
+    Csa[0, 0] = (eta - 1) * csa / 2  + Siso
+    Csa[1, 1] = -(1 + eta) * csa / 2 + Siso
+    Csa[2, 2] = csa + Siso
+
+
+    # 1st-rank antisymmetric chemical shift (ACS)
+
+    Acs[0, 1] = Sxy;  Acs[0, 2] = Sxz
+    Acs[1, 0] = -Sxy; Acs[1, 2] = Syz
+    Acs[2, 0] = -Sxz; Acs[2, 1] = -Syz
+    
+    # print(Acs)
+
+    # Combining CSA and ACS
+    CSPAS = Csa + Acs
+
+
+    #Transformation between different frames
+    U = Rabc(a, b, c)
+    CsaQ = np.matmul(np.matmul(U, Csa), np.linalg.inv(U))
+    AcsQ = np.matmul(np.matmul(U, Acs), np.linalg.inv(U))
+    CSQ = np.matmul(np.matmul(U, CSPAS), np.linalg.inv(U))
+
+    U = Rabc(zeta, lamda, nu)
+    QX = np.matmul(np.matmul(U, QPAS), np.linalg.inv(U))
+    CsaQX = np.matmul(np.matmul(U, CsaQ), np.linalg.inv(U))
+    AcsQX = np.matmul(np.matmul(U, AcsQ), np.linalg.inv(U))
+    CSQX = np.matmul(np.matmul(U, CSQ), np.linalg.inv(U))
+
+    U = Rabc(alpha, beta, gamma) 
+    QXG = np.matmul(np.matmul(U, QX), np.linalg.inv(U)); 
+    CsaQXG = np.matmul(np.matmul(U, CsaQX), np.linalg.inv(U));
+    AcsQXG = np.matmul(np.matmul(U, AcsQX), np.linalg.inv(U)); 
+    CSQXG = np.matmul(np.matmul(U, CSQX), np.linalg.inv(U));
+
+
+            
+    text = ['z rotation', 'y rotation', 'x rotation']
+    df = [0]*len(text)
+    file_path = ('/Users/shiva/Documents/Research/GitHub/Script_project/Data_simulation')
+    for i in (range(len(text))):
+        ang = 0 #starting angle
+        for j in range(0, Nptx+1):
+            
+            aphi = [-(ang), 0, np.pi/2]   
+            atheta = [np.pi/2, ang, -ang] #-z, y, -x rotation
+            
+            theta = atheta[i] 
+            phi = aphi[i]
+            
+            ct = np.cos(theta); st = np.sin(theta); s2t = 2*ct*st; c2t = ct*ct-st*st;
+            cp = np.cos(phi); sp = np.sin(phi); s2p = 2*cp*sp; c2p = cp*cp-sp*sp;
+            
+            R2m2Q, R2m1Q, R20Q, R2p1Q, R2p2Q = Quad(QXG,ct, st, s2t, c2t, cp ,sp ,c2p ,s2p)
+            R2m1cs, R20cs, R2p1cs = ChemShift(CsaQXG,ct, st, s2t, c2t, cp, sp, c2p, s2p)
+            R1m1acs, R1p1acs = AntiShift(AcsQXG,ct, st, cp, sp);
+
+            #********************change made from original code according to theory in next line**************************
+            HCSA1 = (R20cs + 1/3*(CsaQXG[2, 2] + CsaQXG[0,0] + CsaQXG[1,1]))                                                # Siso = 1/3*(CsaQXG[2, 2] + CsaQXG[0,0] + CsaQXG[1,1]); Siso added to CSA tensor
+            HQCSA = -((Q*conv_fac)/(2*Ispin*(2*Ispin-1)))*(R2m1Q*R2p1cs+R2p1Q*R2m1cs)/(2*wX); #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
+            HQACS = -((Q*conv_fac)/(2*Ispin*(2*Ispin-1)))*(R2p1Q*R1m1acs - R2m1Q*R1p1acs)/(2*wX); #change made based on equations in doc *****multiplied factor of -0.5/2I(2I-1)
+
+            
+            HQ1 = (Q*conv_fac)/(2*Ispin*(2*Ispin-1))*R20Q
+            HQ2a= ((Q*conv_fac)**2/(2*Ispin*(2*Ispin-1))**2)*(R2m2Q*R2p2Q)/(2*wX)                        
+            HQ2b = ((Q*conv_fac)**2/(2*Ispin*(2*Ispin-1))**2)*(R2m1Q*R2p1Q)/(2*wX)
+
+            # HQ2a= 0.5*(R2m2Q*R2p2Q)/wX                         
+            # HQ2b = 0.5*(R2m1Q*R2p1Q)/wX 
+
+        #********************change made from original code according to theory in next line**************************
+            #****************coefficients are from code nmr_eq_coefficients*********************************************
+            freq3212[j] = 6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)      # 3/2 <-> 1/2
+            freq1212[j] = 0*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 6*np.real(HQ2a) + 12*np.real(HQ2b) # 1/2 <-> -1/2
+            freq1232[j] = -6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)  #-1/2   <-> -3/2                                         
+
+            freqSUM[j] = freq3212[j]+freq1212[j] + freq1232[j]          #3/2 <-> 1/2 + 1/2 <-> -1/2 + -1/2   <-> -3/2  transition 
+            freqDIFF[j] = freq3212[j]-freq1232[j]                     #3/2 <-> 1/2 - -1/2   <-> -3/2  transition 
+            
+            #the coeffient are taken from coefficients in freq equation
+            qcsa[j] = 6*np.real(HQCSA)
+            qacs[j] = 6*np.real(HQACS)
+            # qacs_anti[j] = 6*np.real(-HQACS) #no need to calculate qacs_anti like this as we need to change the acs tensor components
+        
+            
+            XX[j]=(ang*180/np.pi)
+            ang = ang + dangle
+        
+        data = np.column_stack((XX, np.real(freqSUM), np.real(freqDIFF), np.real(freq3212), np.real(freq1212), np.real(freq1232) ,np.real(qacs), np.real(qcsa)))
+
+        df[i]= pd.DataFrame(data, columns=['angle', 'freq_sum', 'freq_diff', 'freq_3212', 'freq_1212', 'freq_1232','acs', 'csa'])
+
+        filename = f'{text[i]}_set{k+1}_B_eQ.csv'
+        full_path = os.path.join(file_path, filename)
+        df[i].to_csv(full_path, index=True)
