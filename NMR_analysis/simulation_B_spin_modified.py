@@ -1,4 +1,6 @@
-from libraries import *
+import numpy as np
+import pandas as  pd
+import os
 from functions import Rabc, Quad, ChemShift, AntiShift
 #*******************************Input Parameters********************************************
 Nptx = 64 #number of data points
@@ -60,12 +62,13 @@ for k in (range(len(Sxy_set))):
     #input parameters
     #       {a,b,c)       {zeta,lamda,nu}         {alpha,beta,gama}           {phi,theta, 0}
     # CSA===========>Quad==================>X-tal=======================>Gon=================>Rot. Frame
-
-    a, b, c = 47*np.pi/180, 95*np.pi/180, 76*np.pi/180
-    zeta, lamda, nu = -60*np.pi/180, 105*np.pi/180, -39.5*np.pi/180      
-    alpha, beta, gamma = 153.5*np.pi/180, 153.4*np.pi/180, 180*np.pi/180    
     # using RHQ site 1 values
-
+    a, b, c = 47*np.pi/180, 95*np.pi/180, 76*np.pi/180
+    zeta, lamda, nu = -53*np.pi/180, 163*np.pi/180, 90*np.pi/180     
+    alpha, beta, gamma = 153.5*np.pi/180, 153.4*np.pi/180, 180*np.pi/180    
+    
+    # zeta, lamda, nu = -60*np.pi/180, 105*np.pi/180, -39.5*np.pi/180  #previous values used for simulation in manuscript  
+     
     # tensor parameter at PAS
     QPAS = np.zeros((3, 3))
     Csa = np.zeros((3, 3))
@@ -117,7 +120,7 @@ for k in (range(len(Sxy_set))):
             
     text = ['z rotation', 'y rotation', 'x rotation']
     df = [0]*len(text)
-    file_path = ('/home/shiva/WMU/PhD/Scripts/phd_project/Python/NMR/Data_simulation/')
+    file_path = ('/Users/shiva/Documents/Research/GitHub/Script_project/Data_simulation')
     for i in (range(len(text))):
         ang = 0 #starting angle
         for j in range(0, Nptx+1):
@@ -152,7 +155,7 @@ for k in (range(len(Sxy_set))):
             #****************coefficients are from code nmr_eq_coefficients*********************************************
             freq3212[j] = 6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)      # 3/2 <-> 1/2
             freq1212[j] = 0*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 6*np.real(HQ2a) + 12*np.real(HQ2b) # 1/2 <-> -1/2
-            freq1232[j] = -6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)  #-1/2   <-> -3/2                                                                                    #-1/2<->-3/2
+            freq1232[j] = -6*(np.real(HQ1) + np.real(HQCSA) + np.real(HQACS)) + 1*np.real(HCSA1) + 0*np.real(HQ2a) + -12*np.real(HQ2b)  #-1/2   <-> -3/2                                         
 
             freqSUM[j] = freq3212[j]+freq1212[j] + freq1232[j]          #3/2 <-> 1/2 + 1/2 <-> -1/2 + -1/2   <-> -3/2  transition 
             freqDIFF[j] = freq3212[j]-freq1232[j]                     #3/2 <-> 1/2 - -1/2   <-> -3/2  transition 
@@ -170,4 +173,6 @@ for k in (range(len(Sxy_set))):
 
         df[i]= pd.DataFrame(data, columns=['angle', 'freq_sum', 'freq_diff', 'freq_3212', 'freq_1212', 'freq_1232','acs', 'csa'])
 
-        df[i].to_csv(f'{file_path}{text[i]}_set{k+1}_B.csv', index=True)
+        filename = f'{text[i]}_set{k+1}_B.csv'
+        full_path = os.path.join(file_path, filename)
+        df[i].to_csv(full_path, index=True)
