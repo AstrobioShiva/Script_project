@@ -10,10 +10,10 @@ w0 = 192.5 #input for 11B in MHz
 wX = w0*10**6 #actual freq in Hz
 
 dangle  = np.pi/Nptx
-conv_fac = 234.9647
-#Spin Quantum Number
-Ispin = 3/2
-Q = 0.0406
+conv_fac = 234.9647 # conversion factor https://www.scm.com/doc/ADF/Input/EFG.html
+
+Ispin = 3/2 #Spin Quantum Number for 11B
+Q = 0.0406 # Electric Quadrupole moment for 11B in barn
 ########### Quadrupolar coupling tensor #########################
 #coupling values provided to match the magnitude of simulated with experimental data
 # CQ_M = 0.01 #CQ in MHz
@@ -30,7 +30,7 @@ Q = 0.0406
 # Values from CASTEP calculations
 CQ_M = 2.12      #CQ in MHz
 Qeta = 1.00
-Siso_ppm = -8   #isotropic chemical shift + offset(ppm)
+Siso_ppm = -8   #isotropic chemical shift
 delta_ppm = -9.2  #chemical shift anisotropy (CSA) (ppm)
 eta = 0.46
 
